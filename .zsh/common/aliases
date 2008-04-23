@@ -1,0 +1,65 @@
+# Short command aliases
+alias l='ls'
+alias ll='ls -l'
+alias la='ls -A'
+alias lq='ls -Q'
+alias lr='ls -R'
+alias lrt='ls -lrt'
+alias j='jobs -l'
+alias v='vim'
+
+# Play safe!
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
+# Convenience
+alias mkdir='mkdir -p'
+alias dus='du -ms * | sort -n'
+alias grep='grep --color'
+alias egrep='egrep --color'
+alias obexftp='obexftp -b 00:1B:59:59:5B:E8'
+alias nano='nano -wxi'
+alias whois='whois -H'
+
+alias root-tail='root-tail -font "-*-fxd-medium-r-normal-*-*-*-*-*-*-*-*-" -reverse -minspace'
+
+# Typing errors...
+alias 'cd..'='cd ..'
+alias gerp='grep'
+
+# Running 'b.ps' runs 'gv b.ps'
+alias -s ps=gv
+alias -s pdf=acroread
+alias -s mid=timidity
+
+# SSH aliases
+alias sshh='ssh heeps.union.ic.ac.uk'
+alias sshp='ssh smcphoenix.hopto.org'
+alias ssht='ssh tainan.smc'
+
+alias sshs='ssh scaramanga.siterage.net'
+alias sshrs='ssh retiarius@scaramanga.siterage.net'
+alias sshsr='sshrs'
+
+# some global aliases
+alias -g L='| less'
+alias -g G='| grep'
+alias -g EG='| egrep'
+alias -g S='| sed'
+alias -g ES='| sed -r'
+alias -g X='| xargs'
+alias -g H='| head'
+alias -g T='| tail'
+
+# directory name aliases
+alias -g '...'='../..'
+alias -g '....'='../../..'
+alias -g '.....'='../../../..'
+alias -g '......'='../../../../..'
+alias -g '.......'='../../../../../..'
+alias -g '........'='../../../../../../..'
+alias -g '.........'='../../../../../../../..'
+alias -g '..........'='../../../../../../../../..'
+
+# vim: ft=zsh et ts=2 sw=2

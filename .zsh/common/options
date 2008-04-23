@@ -1,0 +1,72 @@
+#  CHANGING DIRECTORIES
+# ======================
+# automatically cd to named dirs
+setopt auto_cd
+# automatically put dirs on the stack when changing
+setopt auto_pushd
+# if the argument is not a directory, try it as a variable
+setopt cdable_vars
+# do not push multiple copies of a directory onto the stack
+setopt pushd_ignore_dups
+
+
+#  COMPLETION
+# ============
+# try to reduce space taken by list
+setopt list_packed
+
+
+#  HISTORY
+# =========
+# don't overwrite the history - add instead
+setopt append_history
+# remove an older duplicate from the list
+setopt hist_ignore_all_dups
+# don't put commands with a leading space into history
+setopt hist_ignore_space
+# remove extra blanks from history lines
+setopt hist_reduce_blanks
+# when saving history, old duplicates are dropped
+setopt hist_save_no_dups
+# when using history expansion, reload the line before executing
+setopt hist_verify
+# append to history immediately
+setopt inc_append_history
+# share history between shells
+setopt share_history
+
+
+#  INPUT/OUTPUT
+# ==============
+# do not allow > and >> to truncate/create files
+unsetopt clobber
+# spelling correction for commands
+#setopt correct
+# Prompts for confirmation after 'rm *' etc
+setopt rm_star_wait
+# Allow short form for loops
+setopt short_loops
+
+
+#  JOB CONTROL
+# =============
+# Background processes aren't killed on exit of shell
+setopt auto_continue
+# Immediately report background jobs' status
+setopt notify
+
+
+#  SCRIPTS AND FUNCTIONS
+# =======================
+# Perform implicit tees or cats
+setopt multios
+
+
+#  ZLE
+# =====
+# No beeps!
+setopt nobeep
+# enable extended globbing
+setopt extendedglob
+
+# vim: ft=zsh et ts=2 sw=2

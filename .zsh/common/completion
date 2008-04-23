@@ -1,0 +1,94 @@
+zstyle ':completion:*' completer _complete _expand _match _correct _list _approximate
+zstyle ':completion:*' completions 1
+zstyle ':completion:*' glob 0
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '+m:{a-z}={A-Z} r:|[._-]=** r:|=**' '' '' '+m:{a-z}={A-Z} r:|[._-]=** r:|=**'
+zstyle ':completion:*' substitute 0
+zstyle ':compinstall'  filename '/home/dave/.zshrc'
+zstyle ':completion:*' menu select=5
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+
+# allow one error for every three characters typed in approximate completer
+zstyle -e ':completion:*:approximate:*' max-errors \
+    'reply=( $(( 1 + ($#PREFIX+$#SUFFIX)/3 )) numeric )'
+
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/.comp_cache
+
+zstyle ':completion:*:cd:*' ignored-patterns '(*/)#lost+found'
+
+zstyle -d users
+
+# CLEAR OUT THAT DAMNED CD COMPLETION GARBAGE!!!
+zstyle ':completion:*:*:*:users' ignored-patterns \
+    adm adm alias apache apache at backup beagleindex bin bin bind captive cron \
+    cyrus daemon daemon dhcp dictd distcc festival games games gdm gdm gkrellmd \
+    gnats guest haldaemon halt hamachi ident identd irc junkbust ldap lighttpd \
+    lp mail mailnull man messagebus motion mysql named news nobody nscd ntp nut \
+    operator p2p partimag pcap portage postfix postgres postmaster proftpd \
+    proxy 'qmail?' radvd rpc rpcuser rpm sabayon-admin shutdown smmsp squid \
+    sshd sync sys tcpdump uucp vcsa vmail vpopmail www www-data xfs \
+
+# no functions for programs i dont have
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+zstyle ':completion:*:rm:*' ignore-line yes
+zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/)CVS'
+zstyle ':completion:*:cd:*' ignored-patterns '(*/)#CVS'
+zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/)scp'
+zstyle ':completion:*:cd:*' ignored-patterns '(*/)#scp'
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
+# Insert all expansions for expand completer.
+zstyle ':completion:*:expand:*' tag-order all-expansions
+
+# Formatting and messages (more verbose output...)
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:descriptions' format $'%{\e[1;33m%}%d%{\e[0m%}'
+zstyle ':completion:*:messages' format $'%{\e[0;33m%}%d%{\e[0m%}'
+zstyle ':completion:*:warnings' format $'%{\e[0;31m%}No matches for: %d%{\e[0m%}'
+zstyle ':completion:*:corrections' format $'%{\e[1;33m%}%d (errors: %e)%{\e[0m%}'
+zstyle ':completion:*' group-name ''
+
+zstyle ':completion:*:processes' command 'ps -au$USER'
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*' force-list always
+
+zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/)CVS'
+zstyle ':completion:*:cd:*' ignored-patterns '(*/)#CVS'
+
+# no binary files for vi
+zstyle ':completion:*:vi:*' ignored-patterns '*.(o|a|so|aux|dvi|swp|fig|bbl|blg|bst|idx|ind|out|toc|class|pdf|ps)'
+zstyle ':completion:*:vim:*' ignored-patterns '*.(o|a|so|aux|dvi|swp|fig|bbl|blg|bst|idx|ind|out|toc|class|pdf|ps)'
+zstyle ':completion:*:gvim:*' ignored-patterns '*.(o|a|so|aux|dvi|swp|fig|bbl|blg|bst|idx|ind|out|toc|class|pdf|ps)'
+
+# no binary files for less
+zstyle ':completion:*:less:*' ignored-patterns '*.(o|a|so|dvi|fig|out|class|pdf|ps)'
+zstyle ':completion:*:zless:*' ignored-patterns '*.(o|a|so|dvi|fig|out|class|pdf|ps)'
+
+# hostname auto-completion
+if [[ -f $HOME/.ssh/known_hosts ]]; then
+    myhosts=( ${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*} )
+    zstyle ':completion:*' hosts $myhosts;
+fi
+if [[ -f $HOME/.netrc ]]; then
+    ournethosts=( ${${${(f)"$(<$HOME/.netrc)"}##machine }%%\ *} )
+    zstyle ':completion:*' hosts $ournethosts;
+fi
+if [[ -f /etc/ssh/known_hosts ]]; then
+    ourhosts=( ${${${${(f)"$(</etc/ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*} )
+    zstyle ':completion:*' hosts $ourhosts;
+fi
+
+autoload -Uz compinit
+compinit
+
+# The colour completion module should be automatically loaded if menu selection
+# is used, but to be sure we do it here too.
+zmodload -i zsh/complist
+
+ZLS_COLORS=$LS_COLORS
+
+# vim: ft=zsh et ts=2 sw=2

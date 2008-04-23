@@ -1,0 +1,7 @@
+# Automatically background processes (no output to terminal etc)
+z() {
+  echo $*
+  $* &> /dev/null &!
+}
+
+# vim: ft=zsh et ts=2 sw=2

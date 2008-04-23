@@ -1,0 +1,29 @@
+ZSHRC_CLASSES+=( common gui gentoo )
+ZSHRC_FUNCTIONS+=( gui svn )
+
+path+=( /opt/bin /opt/vmware/server/bin )
+
+my_accounts=(
+  {root,retiarius}@{scaramanga.,}siterage.net
+  {dave,root}@localhost
+  dmi04@shell{1..4}.doc.ic.ac.uk
+  dmi04@vertex{0{1..9},{1..5}{0..9}}.doc.ic.ac.uk
+  dmi04@edge{0{1..9},1{0..5}}.doc.ic.ac.uk
+)
+
+zstyle ':completion:*my-accounts' users-hosts $my_accounts
+
+export DISTCC_DIR="/var/tmp/portage/.distcc"
+
+PROJECT="$HOME/Documents/Uni/year4/project"
+PROJ_DOCS="$HOME/Documents/Uni/year4/project/docs"
+PROJ_CODE="$HOME/Documents/Uni/year4/project/code"
+
+# SSH to shell[1234].doc.ic.ac.uk at random
+sshdoc() {
+  local num=$(($RANDOM % 4 + 1))
+  echo -ne "ssh shell${num}\r"
+  ssh dmi04@shell${num}.doc.ic.ac.uk "$@"
+}
+
+# vim: ft=zsh et ts=2 sw=2

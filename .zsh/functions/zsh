@@ -1,0 +1,18 @@
+## invoke this every time .zshrc is changed to recompile
+src ()
+{
+	autoload -U zrecompile
+	[ -f ~/.zshrc ] && zrecompile -p ~/.zshrc
+  for i in ~/.zsh/**/*(.); do
+    zrecompile -p $i
+  done
+  (
+    setopt nonomatch
+    if [[ -n "$( print ~/.zsh/**/*.zwc.old )" ]]; then
+      rm -f ~/.zsh/**/*.zwc.old
+    fi
+  )
+	source ~/.zshrc
+}
+
+# vim: ft=zsh et ts=2 sw=2

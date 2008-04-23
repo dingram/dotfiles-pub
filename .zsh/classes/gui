@@ -1,0 +1,23 @@
+[[ -z "${ZSHRC_FUNCTIONS[(r)gui]}" ]] && ZSHRC_FUNCTIONS+=( gui )
+
+# Aliases to use the "z" command
+alias acroread='z acroread'
+alias amarok='z amarok'
+alias azureus='z azureus'
+alias evince='z evince'
+alias firefox='z firefox'
+alias gaim='z gaim'
+alias gimp='z gimp'
+alias gv='z gv'
+alias ooffice2='z ooffice2'
+alias ooffice='z ooffice'
+alias oowriter2='z oowriter2'
+alias oowriter='z oowriter'
+alias sunbird='z sunbird'
+alias thunderbird='z thunderbird'
+
+# keyboard layouts
+alias 'aoeu=setxkbmap gb' # British
+alias 'asdf=setxkbmap gb dvorak 2> /dev/null || setxkbmap dvorak gb 2> /dev/null || setxkbmap dvorak' # Dvorak
+
+# vim: ft=zsh et ts=2 sw=2

@@ -1,0 +1,37 @@
+# search for various types of README file in dir and display them in $PAGER
+readme ()
+{
+	local files
+	files=(./(#i)*readme*(ND))
+	if (($#files))
+	then $PAGER $files
+	else
+	print 'No README files.'
+	fi
+}
+
+# show status for dd
+ddstat() {
+  while (:); do
+    killall -USR1 dd 2>/dev/null || break
+    sleep 2s
+  done
+}
+
+# Quick way to create an executeable script
+vimx() {
+  touch "$@"
+  chmod +x "$@"
+  vim "$@"
+}
+
+vman() {
+  /usr/bin/man $* | col -b | vim -c 'set ft=man nomod nolist' -
+}
+
+scrab() {
+  local word="$1"
+  curl -s 'http://spod.cx/cheat-o-matic.shtml?letters='"${word}"'&dict=sowpods&Cheat=Cheat' | sed -rn "/^<a href/{s#.*(['\"]>|a> )##; s#<br/>##; s#</a>##; p}" | tr 'A-Z' 'a-z'
+}
+
+# vim: ft=zsh et ts=2 sw=2

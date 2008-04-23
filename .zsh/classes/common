@@ -1,0 +1,31 @@
+# import aliases
+. $ZSHDIR/common/aliases
+
+# import ZSH options
+. $ZSHDIR/common/options
+
+# import ZSH variables
+. $ZSHDIR/common/vars
+
+# set up completion
+. $ZSHDIR/common/completion
+
+# Calculator
+autoload zcalc
+
+# Line editor
+autoload zed
+
+# Renaming with globbing
+autoload zmv
+
+# When directory is changed set xterm title to host:dir
+chpwd() {
+  [[ -t 1 ]] || return
+  case $TERM in
+    sun-cmd) print -Pn "\e]l%~\e\\";;
+    *xterm*|rxvt|(dt|k|E)term) print -Pn "\e]2;%m:%~\a";;
+  esac
+}
+
+# vim: ft=zsh et ts=2 sw=2

@@ -1,0 +1,9 @@
+unkeyword() {
+  sudo zsh -c "echo \"$1 ~x86\" >> /etc/portage/package.keywords"
+}
+
+setuse() {
+  sudo zsh -c "echo \"$*\" >> /etc/portage/package.use"
+}
+
+# vim: ft=zsh et ts=2 sw=2
