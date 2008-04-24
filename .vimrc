@@ -1,203 +1,243 @@
-"""""""""""""""""""""""""""""""""
-" Various settings
-"""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Filename:     .vimrc
+" Description:  Custom vim (and gvim) configuration)
+" Author:       Dave Ingram
+" Coauthor:     Nick Pope
+" Last Updated: 2008-04-24 14:21:43
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set cmdheight=1       " Commandbar height is 1
-set expandtab		      " Expand tabs to spaces
-set history=400       " How many lines of history to remember
-set hlsearch          " Highlight search
-set ignorecase        " Ignore case when searching
-set incsearch         " Incremental search
-set magic             " Allow magic characters in searches or replaces
-set mat=2             " Blink for 2/10 sec
-"set mouse=a           " Always use mouse
-set nobackup		      " No backups!
-set nocompatible      " No compatible mode
-set noerrorbells      " Quiet on errors
-set nonu              " Do not number lines
-set novisualbell      " No visual flash
-set ruler             " Show ruler
-set shell=zsh         " Use bash for my shell
-set shiftwidth=2	    " Tabstop = 2 chars (autoindenting)
-set shortmess+=I      " No welcome message
-set showcmd           " Show partial command in statusbar
-set showmatch         " Show matching brackets
-set t_vb=             " No visual flash (termcap)
-set tabstop=2		      " Tabstop = 2 chars
-set textwidth=0		    " Text width = 0 == no autowrapping of text
-set wildmenu          " Wildcard menu
-set winminheight=0    " No minimum window height
-set foldlevel=9999    " Expand folds by default
-" Not sure whether it's better to enable/disable the ones I (don't) want.
-set guioptions=aegimc " enable autoselect, tabs, grey menu items, icon, menubar, console dialogs
-"set spell spelllang=en_gb
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General Settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible               " do not use compatibility mode (must be 1st)
+set backspace=indent,eol,start " configure backspace behaviour
+set cmdheight=1                " Commandbar height is 1
+set expandtab		               " Expand tabs to spaces
+set foldlevel=9999             " Expand folds by default
+set history=500                " How many lines of history to remember
+set hlsearch                   " Highlight search
+set ignorecase                 " Ignore case when searching
+set incsearch                  " Incremental search
+set magic                      " Allow magic characters in searches or replaces
+set mat=2                      " Matching parens should blink for 2/10 sec
+"set mouse=a                    " Always use mouse
+set nobackup		               " No backups!
+set noerrorbells               " Quiet on errors
+set nonumber                   " Do not number lines
+set novisualbell               " No visual flash
+set ruler                      " Show ruler
+set shiftwidth=2	             " Tabstop = 2 chars (autoindenting)
+set shortmess+=I               " No welcome message
+set showcmd                    " Show partial command in statusbar
+set showmatch                  " Show matching brackets
+set t_vb=                      " No visual flash (termcap)
+set tabstop=2		               " Tabstop = 2 chars
+set textwidth=0		             " Text width = 0 == no autowrapping of text
+set wildmenu                   " Wildcard menu
+set winminheight=0             " No minimum window height
+set guioptions=aegimc          " enable autoselect, tabs, grey menu items,
+                               "   icon, menubar, and console dialogs
 
-" Set backspace
-set backspace=eol,start,indent
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" OS-Specific Settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('win32') || has('win64')
+  " Windows-specific options
+  set guifont=Courier\ New:h10 " set a respectable looking font
+  set shellslash               " required for latex-suite
+else " Assume Linux-specific options
+  " grep sometimes doesn't display file names when searching a single file,
+  " which confuses latex-suite, so let's fix that:
+  set grepprg=grep\ -nH\ $*
+  set shell=zsh
+endif
 
-" grep sometimes doesn't display file names when searching a single file,
-" which confuses latex-suite, so let's fix that:
-set grepprg=grep\ -nH\ $*
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Colour scheme
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('gui_running')
+  colorscheme desert
+else
+  colorscheme delek " or elflord?
+endif
 
-"set mapleader = ","
-"set g:mapleader = ","
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Filetype settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype indent plugin on	" Indent files please, with omnicompletion
+syntax on
+" file formats
+map <leader>fd :set fileformat=dos<cr>:w<cr>
+map <leader>fm :set fileformat=mac<cr>:w<cr>
+map <leader>fu :set fileformat=unix<cr>:w<cr>
 
 " format a paragraph
 noremap Q mzgqap`z
 " expected behaviour
 noremap Y y$
 
-"""""""""""""""""""""""""""""""""
-" Filetype settings
-"""""""""""""""""""""""""""""""""
-
-filetype indent on	" Indent files please
-filetype plugin on  " Omnicompletion etc
-syntax on
-
-color desert
-
-"""""""""""""""""""""""""""""""""
-" Abbreviations
-"""""""""""""""""""""""""""""""""
-
-iab xdate <c-r>=strftime("%Y-%m-%d")<cr>
-iab xtime <c-r>=strftime("%H:%M:%S")<cr>
-iab xdatetime <c-r>=strftime("%Y-%m-%d %H:%M:%S")<cr>
-iab xname Dave Ingram
-
-"""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Spell checking
-"""""""""""""""""""""""""""""""""
-
-let spell_executable = "aspell"
-let spell_root_menu = "-"
-let spell_insert_mode = 0
-let spell_auto_type = ''
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let spell_executable="aspell"
+let spell_root_menu="-"
+let spell_insert_mode=0
+let spell_auto_type=''
 highlight SpellErrors ctermfg=Red
+map <F10> :setlocal spell! spelllang=en_gb<cr>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Highlight space at end of line as error
-highlight WhitespaceEOL ctermbg=darkred guibg=Red
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+highlight WhitespaceEOL ctermbg=DarkRed guibg=Red
 match WhitespaceEOL /\s\+$/
 
-"""""""""""""""""""""""""""""""""
-" file formats
-"""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Editing vimrc
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('win32') || has('win64')
+  " Fast reload of vimrc
+  map <leader>s :source ~/_vimrc<cr>
+  " Fast editing of vimrc
+  map <leader>e :sp ~/_vimrc<cr>
+  " When vimrc is edited, reload it
+  autocmd! bufwritepost _vimrc source ~/_vimrc
+else
+  " Fast reload of vimrc
+  map <leader>s :source ~/.vimrc<cr>
+  " Fast editing of vimrc
+  map <leader>e :sp ~/.vimrc<cr>
+  " When vimrc is edited, reload it
+  autocmd! bufwritepost .vimrc source ~/.vimrc
+endif
 
-map <leader>fd :set ff=dos<cr>:w<cr>
-map <leader>fu :set ff=unix<cr>:w<cr>
-
-"""""""""""""""""""""""""""""""""
-" vimrc editing
-"""""""""""""""""""""""""""""""""
-
-" Fast reload of vimrc
-map <leader>s :source ~/.vimrc<cr>
-
-" Fast editing of vimrc
-map <leader>e :sp ~/.vimrc<cr>
-
-" When vimrc is edited, reload it
-autocmd! bufwritepost .vimrc source ~/.vimrc
-
-"""""""""""""""""""""""""""""""""
-" functions
-"""""""""""""""""""""""""""""""""
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Functions
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 func! DeleteTrailingWS()
   norm mz
   %s/\s\+$//ge
   norm `z
 endfunc
 
-"""""""""""""""""""""""""""""""""
-" auto commands
-"""""""""""""""""""""""""""""""""
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Autocommands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup deltrailws
-
-  " Don't redefine these
+  " Remove existing commands in group if defined
   autocmd!
-
-  " C programmers suck.
   autocmd BufWrite *.[chC]          :call DeleteTrailingWS()
   autocmd BufWrite *.{cc,hh}        :call DeleteTrailingWS()
   autocmd BufWrite *.[ch]{xx,pp,++} :call DeleteTrailingWS()
+  autocmd BufWrite *.{pl,php,java}  :call DeleteTrailingWS()
+  autocmd BufWrite *.txt            :call DeleteTrailingWS()
+  autocmd BufWrite *.{cls,sty,tex}  :call DeleteTrailingWS()
+augroup end
+augroup fixfiletype
+  autocmd!
+  autocmd BufNewFile,BufRead *.thtml            :set filetype=php
+  autocmd BufRead            /var/log/messages* :set filetype=messages
+augroup end
+augroup qmv
+  autocmd!
+  autocmd BufRead /tmp/qmv* :set ts=8
+augroup end
 
-  autocmd BufWrite *.pl     :call DeleteTrailingWS()
-  autocmd BufWrite *.php    :call DeleteTrailingWS()
-  autocmd BufWrite *.java   :call DeleteTrailingWS()
-  autocmd BufWrite *.txt    :call DeleteTrailingWS()
-  autocmd BufWrite *.tex    :call DeleteTrailingWS()
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Subversion helper
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if !(has('win32') || has('win64'))
+  map <F8> :new<CR>:read !svn diff<CR>:set syntax=diff buftype=nofile<CR>gg
+endif
 
-augroup END
+"*****************************************************************************
+" HTML Formatting Commands
+"*****************************************************************************
+" strip tags
+map <leader>h! mz:%s#<\_.\{-}>##g<cr>:%s#&nbsp;# #g<cr>`z
 
-autocmd BufNewFile,BufRead *.thtml :setfiletype php
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Formatting/movement commands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" format current paragraph and keep cursor in current position
+noremap <silent> Q mzgqap`z
+" copy to end of line
+noremap Y y$
+" remove search highlight
+map <silent> <leader>hh :let @/=''<cr>
 
-"""""""""""""""""""""""""""""""
-" SVN section
-"""""""""""""""""""""""""""""""
-map <F8> :new<CR>:read !svn diff<CR>:set syntax=diff buftype=nofile<CR>gg
-
-"""""""""""""""""""""""""""""""""
-" automatic Java stuff
-"""""""""""""""""""""""""""""""""
-
-" Folding
+"*****************************************************************************
+" Automatic Java Commands - TODO: move to ftplugin
+"*****************************************************************************
+" Functions
 function! JavaFold()
-  setl foldmethod=syntax
-  setl foldlevelstart=1
-  syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
-  syn match foldImports /\(\n\?import.\+;\n\)\+/ transparent fold
-
-  function! FoldText()
-    return substitute(getline(v:foldstart), '{.*', '{...}', '')
+  syn region fold_braces start=/{/ end=/}/ transparent fold keepend extend
+  syn region fold_javadoc start=+/\*\*+ end=+\*/+ transparent fold keepend extend
+  syn match  fold_imports /\n\%(import[^;]\+;\n\)\+/ transparent fold
+  function! JavaFoldText()
+    let header = substitute(getline(v:foldstart), '{.*', '{...}', '')
+    return matchstr(foldtext(), '^[^:]*') . ': ' . header
   endfunction
-  setl foldtext=FoldText()
+  setl foldlevelstart=1
+  setl foldmethod=syntax
+  setl foldtext=JavaFoldText()
 endfunction
 
-augroup java-stuff
+" Autocommand group
+augroup java_au
   au!
+  " folding
   au FileType java call JavaFold()
   au FileType java setl fen
+  " macros
   au FileType java inoremap <buffer> <C-t> System.out.println();<esc>hi
-
-  "Abbrevs
-  au FileType java inoremap <buffer> $pr private
-  au FileType java inoremap <buffer> $r return
-  au FileType java inoremap <buffer> $pu public
-  au FileType java inoremap <buffer> $i import
+  " abbreviations
   au FileType java inoremap <buffer> $b boolean
-  au FileType java inoremap <buffer> $v void
+  au FileType java inoremap <buffer> $i import
+  au FileType java inoremap <buffer> $pa private
+  au FileType java inoremap <buffer> $pr private
+  au FileType java inoremap <buffer> $pu public
+  au FileType java inoremap <buffer> $r return
   au FileType java inoremap <buffer> $s String
-augroup END
+  au FileType java inoremap <buffer> $v void
+augroup end
 
-
-"""""""""""""""""""""""""""""""""
-" automatic JS stuff
-"""""""""""""""""""""""""""""""""
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Automatic JavaScript Commands - TODO: move to ftplugin
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! JavaScriptFold()
-  setl foldmethod=syntax
-  setl foldlevelstart=1
-  syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
-
-  function! FoldText()
+  syn region fold_braces start=/{/ end=/}/ transparent fold keepend extend
+  function! JavascriptFoldText()
     return substitute(getline(v:foldstart), '{.*', '{...}', '')
   endfunction
-  setl foldtext=FoldText()
+  setl foldlevelstart=1
+  setl foldmethod=syntax
+  setl foldtext=JavascriptFoldText()
 endfunction
 
-augroup javascript-stuff
+augroup javascript_au
   au!
+  " folding
   au FileType javascript call JavaScriptFold()
   au FileType javascript setl fen
-
+  " macros
   au FileType javascript imap <c-t> console.log();<esc>hi
   au FileType javascript imap <c-a> alert();<esc>hi
-  au FileType javascript setl nocindent
-  au FileType javascript inoremap <buffer> $r return
-
-  au FileType javascript inoremap <buffer> $d //<cr>//<cr>//<esc>ka<space>
+  " abbreviations
   au FileType javascript inoremap <buffer> $c /**<cr><space><cr>**/<esc>ka
-augroup END
+  au FileType javascript inoremap <buffer> $d //<cr>//<cr>//<esc>ka<space>
+  au FileType javascript inoremap <buffer> $r return
+  " options
+  au FileType javascript setl nocindent
+augroup end
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Abbreviations
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+iab xdate <c-r>=strftime("%Y-%m-%d")<cr>
+iab xtime <c-r>=strftime("%H:%M:%S")<cr>
+iab xdatetime <c-r>=strftime("%Y-%m-%d %H:%M:%S")<cr>
+iab xlongdate <c-r>=strftime('%A, %e %B %Y')<cr>
+iab xname Dave Ingram
+iab xcorp Imperial College London
+iab xdept Department of Computing
