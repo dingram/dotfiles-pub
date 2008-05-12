@@ -52,7 +52,7 @@ fi
 if [ "$TERM" != "dumb" ]; then
   if [ -x `which dircolors` ]; then
     eval `dircolors -b`
-    alias 'ls=ls --color'
+    alias 'ls=ls --color=always'
   fi
 fi
 

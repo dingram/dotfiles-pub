@@ -1,4 +1,5 @@
 # Short command aliases
+alias ls='ls --color=always'
 alias l='ls'
 alias ll='ls -l'
 alias la='ls -A'

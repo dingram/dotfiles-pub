@@ -67,14 +67,9 @@ endif
 filetype indent plugin on	" Indent files please, with omnicompletion
 syntax on
 " file formats
-map <leader>fd :set fileformat=dos<cr>:w<cr>
-map <leader>fm :set fileformat=mac<cr>:w<cr>
-map <leader>fu :set fileformat=unix<cr>:w<cr>
-
-" format a paragraph
-noremap Q mzgqap`z
-" expected behaviour
-noremap Y y$
+map <silent> <leader>fd :set fileformat=dos<cr>:w<cr>
+map <silent> <leader>fm :set fileformat=mac<cr>:w<cr>
+map <silent> <leader>fu :set fileformat=unix<cr>:w<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Spell checking
@@ -84,7 +79,7 @@ let spell_root_menu="-"
 let spell_insert_mode=0
 let spell_auto_type=''
 highlight SpellErrors ctermfg=Red
-map <F10> :setlocal spell! spelllang=en_gb<cr>
+map <silent> <F10> :setlocal spell! spelllang=en_gb<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Highlight space at end of line as error
@@ -97,16 +92,16 @@ match WhitespaceEOL /\s\+$/
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('win32') || has('win64')
   " Fast reload of vimrc
-  map <leader>s :source ~/_vimrc<cr>
+  map <silent> <leader>s :source ~/_vimrc<cr>
   " Fast editing of vimrc
-  map <leader>e :sp ~/_vimrc<cr>
+  map <silent> <leader>e :sp ~/_vimrc<cr>
   " When vimrc is edited, reload it
   autocmd! bufwritepost _vimrc source ~/_vimrc
 else
   " Fast reload of vimrc
-  map <leader>s :source ~/.vimrc<cr>
+  map <silent> <leader>s :source ~/.vimrc<cr>
   " Fast editing of vimrc
-  map <leader>e :sp ~/.vimrc<cr>
+  map <silent> <leader>e :sp ~/.vimrc<cr>
   " When vimrc is edited, reload it
   autocmd! bufwritepost .vimrc source ~/.vimrc
 endif
@@ -119,6 +114,8 @@ func! DeleteTrailingWS()
   %s/\s\+$//ge
   norm `z
 endfunc
+
+map <silent> <leader>ds :call DeleteTrailingWS()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Autocommands
@@ -154,7 +151,7 @@ endif
 " HTML Formatting Commands
 "*****************************************************************************
 " strip tags
-map <leader>h! mz:%s#<\_.\{-}>##g<cr>:%s#&nbsp;# #g<cr>`z
+map <silent> <leader>h! mz:%s#<\_.\{-}>##g<cr>:%s#&nbsp;# #g<cr>`z
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Formatting/movement commands

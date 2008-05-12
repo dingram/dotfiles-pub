@@ -1,5 +1,5 @@
 ZSHRC_CLASSES+=( common gui gentoo )
-ZSHRC_FUNCTIONS+=( gui svn )
+ZSHRC_FUNCTIONS+=( gui svn ftp irc )
 
 path+=( /opt/bin /opt/vmware/server/bin )
 
@@ -18,6 +18,10 @@ export DISTCC_DIR="/var/tmp/portage/.distcc"
 PROJECT="$HOME/Documents/Uni/year4/project"
 PROJ_DOCS="$HOME/Documents/Uni/year4/project/docs"
 PROJ_CODE="$HOME/Documents/Uni/year4/project/code"
+
+# FTP
+autoload zfinit
+zfinit
 
 # SSH to shell[1234].doc.ic.ac.uk at random
 sshdoc() {
