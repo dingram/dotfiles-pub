@@ -1,0 +1,5 @@
+# FTP
+autoload zfinit
+zfinit
+
+# vim: ft=zsh et ts=2 sw=2
