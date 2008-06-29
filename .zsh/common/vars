@@ -39,6 +39,13 @@ if [ -x `which less` ]; then
   export LESS="--ignore-case --QUIET -RSm"
   unset LESSOPEN
   unset LESSCLOSE
+  export LESS_TERMCAP_mb=$'\E[01;31m'
+  export LESS_TERMCAP_md=$'\E[01;31m'
+  export LESS_TERMCAP_me=$'\E[0m'
+  export LESS_TERMCAP_se=$'\E[0m'
+  export LESS_TERMCAP_so=$'\E[01;44;33m'
+  export LESS_TERMCAP_ue=$'\E[0m'
+  export LESS_TERMCAP_us=$'\E[01;32m'
 fi
 
 # Set default editor
@@ -58,5 +65,8 @@ fi
 
 # make rsync use SSH by default
 RSYNC_RSH="ssh -c blowfish"
+
+# grep should colourise with red boldness
+GREP_COLOR="1;31"
 
 # vim: ft=zsh et ts=2 sw=2

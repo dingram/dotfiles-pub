@@ -18,6 +18,7 @@ set history=500                " How many lines of history to remember
 set hlsearch                   " Highlight search
 set ignorecase                 " Ignore case when searching
 set incsearch                  " Incremental search
+set linebreak                  " Break at word boundaries
 set magic                      " Allow magic characters in searches or replaces
 set mat=2                      " Matching parens should blink for 2/10 sec
 "set mouse=a                    " Always use mouse
@@ -92,18 +93,32 @@ match WhitespaceEOL /\s\+$/
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('win32') || has('win64')
   " Fast reload of vimrc
-  map <silent> <leader>s :source ~/_vimrc<cr>
+  map <silent> <leader>vs :source ~/_vimrc<cr>
   " Fast editing of vimrc
-  map <silent> <leader>e :sp ~/_vimrc<cr>
+  map <silent> <leader>ve :sp ~/_vimrc<cr>
   " When vimrc is edited, reload it
   autocmd! bufwritepost _vimrc source ~/_vimrc
 else
   " Fast reload of vimrc
-  map <silent> <leader>s :source ~/.vimrc<cr>
+  map <silent> <leader>vs :source ~/.vimrc<cr>
   " Fast editing of vimrc
-  map <silent> <leader>e :sp ~/.vimrc<cr>
+  map <silent> <leader>ve :sp ~/.vimrc<cr>
   " When vimrc is edited, reload it
   autocmd! bufwritepost .vimrc source ~/.vimrc
+endif
+
+"*****************************************************************************
+" Vim Sessions
+"*****************************************************************************
+" ignore 'options' because of latex-suite (would be pointless to save that!)
+set sessionoptions=blank,curdir,folds,help,resize,tabpages,winsize
+if has('win32') || has('win64')
+  set sessionoptions+=slash,unix
+  map <leader>ss :mksession! ~/_vimsession<cr>
+  map <leader>sr :source ~/_vimsession<cr>
+else
+  map <leader>ss :mksession! ~/.vim/.session<cr>
+  map <leader>sr :source ~/.vim/.session<cr>
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
