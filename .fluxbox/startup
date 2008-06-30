@@ -1,0 +1,72 @@
+#!/bin/sh
+# fluxbox startup-script:
+#
+# Lines starting with a '#' are ignored.
+
+# Check configuration files...
+[[ -e /home/dave/.fluxbox/apps.new ]] && mv /home/dave/.fluxbox/apps.new /home/dave/.fluxbox/apps
+
+/usr/bin/fluxbox & wmpid=$!
+
+userresources=$HOME/.Xdefaults
+usermodmap=$HOME/.Xmodmap
+
+if [ -f $userresources ]; then
+    xrdb -merge $userresources
+fi
+
+if [ -f $usermodmap ]; then
+    xmodmap $usermodmap
+fi
+xmodmap -e "pointer = 1 2 3 6 7 4 5"
+
+/usr/bin/numlockx
+
+xset -b
+
+`gnome-keyring-daemon`
+
+#xbindkeys -f $HOME/.xbindkeysrc &
+
+xsetroot -solid black -cursor_name left_ptr -rv &
+
+fbsetbg -l
+
+# Beagle!
+#/usr/bin/beagled
+
+pidgin &
+skype &
+
+bluetooth-applet &
+
+#xscreensaver &
+
+# Stuff for the slit:
+#wmSun -lat 51 -lon 0 &
+#wmcpuload -bl &
+#wmupmon -bl &
+
+conky
+
+#firefox-bin &
+opera &
+thunderbird-bin &
+
+root-tail -font "-*-fxd-medium-r-normal-*-*-*-*-*-*-*-*-"                                             \
+          -minspace -f -g 1260x889+1290+135 -wordwrap                                                 \
+          --cont-color darkslategray                                                                  \
+          /var/log/kernel.log,goldenrod,'Kernel'                                                      \
+          /var/log/messages.sshd,slateblue,'SSH'                                                      \
+          /var/log/messages,dimgray,'Syslog'
+
+
+$HOME/bin/twhirl &
+
+# And last but not least we start fluxbox.
+# Because it is the last app you have to run it with ''exec'' before it.
+
+#exec /usr/bin/fluxbox
+wait $wmpid
+# or if you want to keep a log:
+# exec /usr/bin/fluxbox -log ~/.fluxbox/log

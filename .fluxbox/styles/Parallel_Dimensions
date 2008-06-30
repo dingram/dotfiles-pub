@@ -1,0 +1,99 @@
+#*textColor:                     grey20
+
+toolbar:                        ParentRelative
+toolbar.borderWidth:		0
+toolbar.button:                 ParentRelative
+toolbar.button.picColor:        rgb:2/2/2
+toolbar.label:                  ParentRelative
+toolbar.label.textColor:        rgb:2/2/2
+toolbar.iconbar.empty:          ParentRelative
+toolbar.iconbar.focused:	flat diagonal gradient
+toolbar.iconbar.focused.color:	rgb:2/2/6
+toolbar.iconbar.focused.colorTo: rgb:0/0/0
+toolbar.iconbar.focused.textColor: rgb:c/c/f
+toolbar.iconbar.unfocused:	ParentRelative
+toolbar.iconbar.borderWidth:	0
+toolbar.iconbar.focused.borderWidth:	0
+toolbar.iconbar.unfocused.borderWidth:	0
+toolbar.windowLabel:            ParentRelative
+toolbar.windowLabel.textColor:  rgb:2/2/2
+toolbar.clock:			flat diagonal gradient
+toolbar.clock.color:		rgb:2/2/6
+toolbar.clock.colorTo:		rgb:0/0/0
+toolbar.clock.textColor:	rgb:c/c/f
+toolbar.justify:                right
+toolbar.font:                   lucidasans-10
+toolbar.shaped:			False
+
+menu.title:                     flat diagonal gradient
+menu.title.color:               rgb:d/e/f
+menu.title.colorTo:             rgb:8/9/a
+menu.title.textColor:           rgb:4/4/6
+menu.title.font:                lucidasans-10
+menu.title.justify:             right
+menu.borderWidth:		1
+
+menu.frame:                     flat solid
+menu.frame.color:               rgb:8/9/a
+menu.frame.textColor:           rgb:2/2/4
+menu.frame.disableColor:        rgb:6/6/8
+menu.frame.font:                lucidasans-10
+menu.frame.justify:             left
+
+menu.bullet.position:           right
+menu.bullet:                    triangle
+
+menu.hilite:                    flat diagonal gradient
+menu.hilite.color:              rgb:2/2/6
+menu.hilite.colorTo:            rgb:0/0/0
+menu.hilite.textColor:          rgb:c/c/f
+
+window.title.focus:             flat solid
+window.title.focus.color:       rgb:8/9/a
+window.title.unfocus:           flat solid
+window.title.unfocus.color:     rgb:2/2/4
+
+window.label.focus:             flat horizontal gradient
+window.label.focus.color:       rgb:8/9/a
+window.label.focus.colorTo:     rgb:d/e/f
+window.label.focus.textColor:   rgb:1/1/2
+window.label.unfocus:           flat solid
+window.label.unfocus.color:     rgb:2/2/4
+window.label.unfocus.textColor: rgb:4/4/8
+
+window.button.focus:            flat solid
+window.button.focus.color:      rgb:8/9/a
+window.button.focus.picColor:   rgb:1/1/2
+window.button.unfocus:          flat solid
+window.button.unfocus.color:    rgb:2/2/4
+window.button.unfocus.picColor: rgb:4/4/8
+
+window.handle.focus:            flat crossdiagonal gradient
+window.handle.focus.color:      rgb:8/9/a
+window.handle.focus.colorTo:    rgb:d/e/f
+window.handle.unfocus:          flat solid
+window.handle.unfocus.color:    rgb:2/2/4
+
+window.grip.focus:              flat solid
+window.grip.focus.color:        rgb:8/9/a
+window.grip.unfocus:            flat solid
+window.grip.unfocus.color:      rgb:2/2/4
+
+window.frame.focusColor:        rgb:d/d/f
+window.frame.unfocusColor:      rgb:4/4/6
+
+window.font:                    lucidasans-10
+window.justify:                 right
+
+*button.pressed:                flat solid
+*button.pressed.color:          rgb:a/a/8c
+
+borderColor:                    rgb:2/2/2
+
+bevelWidth:                     2
+borderWidth:                    1
+handleWidth:                    3
+
+*Font:                          lucidasans-10
+
+rootCommand:                    fbsetbg -l
