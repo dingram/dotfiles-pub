@@ -1,0 +1,4 @@
+ZSHRC_CLASSES+=( common )
+ZSHRC_FUNCTIONS+=( svn )
+
+# vim: ft=zsh et ts=2 sw=2
