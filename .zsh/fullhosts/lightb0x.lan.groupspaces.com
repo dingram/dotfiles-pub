@@ -2,6 +2,7 @@ ZSHRC_CLASSES+=( common gui gentoo )
 ZSHRC_FUNCTIONS+=( gui svn ftp irc )
 
 path+=( /opt/bin )
+path=( /usr/lib/colorgcc/bin $path )
 
 my_accounts=(
   {root,retiarius}@{scaramanga.,}siterage.net

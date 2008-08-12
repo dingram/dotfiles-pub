@@ -39,7 +39,7 @@ alias sshh='ssh heeps.union.ic.ac.uk'
 alias sshp='ssh smcphoenix.hopto.org'
 alias ssht='ssh tainan.smc'
 
-alias sshs='ssh scaramanga.siterage.net'
+alias sshs='ssh root@scaramanga.siterage.net'
 alias sshrs='ssh retiarius@scaramanga.siterage.net'
 alias sshsr='sshrs'
 
