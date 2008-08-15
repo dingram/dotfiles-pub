@@ -1,6 +1,7 @@
 # make sure path remains unique
 typeset -U path
-path=(${HOME}/bin ${PATH} /bin /sbin /usr/bin /usr/local/bin /usr/sbin /usr/local/sbin)
+path=(${HOME}/bin ${PATH//:/ } /bin /sbin /usr/bin /usr/local/bin /usr/sbin /usr/local/sbin)
+export PATH="${path// /:}"
 
 # offer directories in parent and in homedir when completing
 cdpath=(~ ..)

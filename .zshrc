@@ -8,9 +8,9 @@ ZSHRC_CLASSES=( common )
 ZSHRC_FUNCTIONS=( misc zsh )
 
 # Add host/domain specific zshrc
-[[ -f $ZSHDIR/fullhosts/$(hostname -f) ]] && . $ZSHDIR/fullhosts/$(hostname -f)
-[[ -f $ZSHDIR/hosts/$(hostname -s) ]]     && . $ZSHDIR/hosts/$(hostname -s)
 [[ -f $ZSHDIR/domains/$(hostname -d) ]]   && . $ZSHDIR/domains/$(hostname -d)
+[[ -f $ZSHDIR/hosts/$(hostname -s) ]]     && . $ZSHDIR/hosts/$(hostname -s)
+[[ -f $ZSHDIR/fullhosts/$(hostname -f) ]] && . $ZSHDIR/fullhosts/$(hostname -f)
 
 # load classes and functions
 for c in "${ZSHRC_CLASSES[@]}"; do
