@@ -92,7 +92,7 @@
   [Layer]	{2}
 [end]
 [app] (name=gecko) (class=Thunderbird-bin)
-  [Position]	(UPPERLEFT)	{445 433}
+  [Position]	(UPPERLEFT)	{405 345}
   [Close]	{yes}
 [end]
 [app] (name=amarokapp) (class=Amarokapp) (role=PlaylistWindow)
