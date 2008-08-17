@@ -15,10 +15,10 @@ if [[ "$TERM" == 'vt320' ]]; then
   PS1=$'%(!.#.$) '
 elif [[ -z "$SSH_CLIENT" ]]; then
   # Not via SSH
-  PS1=$'%{\e[m%}%B%*%b %B%{\e[32m%}%n@%m %{\e[34m%}%~ %(!.#.$) %b%{\e[m%}'
+  PS1=$'%{\e[m%}%B%D{%T}%b %B%{\e[32m%}%n@%m %{\e[34m%}%~ %(!.#.$) %b%{\e[m%}'
 else
   # SSH connection
-  PS1=$'%{\e[m%}%B%*%b %B%{\e[32m%}%n@%{\e[7m%}%m%{\e[0;34m%} %~ %(!.#.$) %b%{\e[m%}'
+  PS1=$'%{\e[m%}%B%D{%T}%b %B%{\e[32m%}%n@%{\e[7m%}%m%{\e[0;34m%} %~ %(!.#.$) %b%{\e[m%}'
   [ -x $( which resolveip ) ] \
     && remote=$( resolveip -s ${SSH_CLIENT%% *} ) \
     || remote=${SSH_CLIENT%% *}
