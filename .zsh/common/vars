@@ -1,7 +1,7 @@
 # make sure path remains unique
 typeset -U path
-path=(${HOME}/bin ${PATH//:/ } /bin /sbin /usr/bin /usr/local/bin /usr/sbin /usr/local/sbin)
-export PATH="${path// /:}"
+path=(${HOME}/bin ${(s/:/)PATH} /bin /sbin /usr/bin /usr/local/bin /usr/sbin /usr/local/sbin)
+export PATH="${(pj+:+)path}"
 
 # offer directories in parent and in homedir when completing
 cdpath=(~ ..)
@@ -10,14 +10,21 @@ cdpath=(~ ..)
 DIRSTACKSIZE=20
 
 # Set a fancy prompt
-if [[ -z "$SSH_CLIENT" ]]; then
-  # Not coming in via SSH
+if [[ "$TERM" == 'vt320' ]]; then
+  # MIDPSSH
+  PS1=$'%(!.#.$) '
+elif [[ -z "$SSH_CLIENT" ]]; then
+  # Not via SSH
   PS1=$'%{\e[m%}%B%*%b %B%{\e[32m%}%n@%m %{\e[34m%}%~ %(!.#.$) %b%{\e[m%}'
 else
   # SSH connection
   PS1=$'%{\e[m%}%B%*%b %B%{\e[32m%}%n@%{\e[7m%}%m%{\e[0;34m%} %~ %(!.#.$) %b%{\e[m%}'
-  RPROMPT=$'%{\e[0;33m%}Remote from %{\e[4;37m%}'${SSH_CLIENT%% *}$'%{\e[m%}'
+  [ -x $( which resolveip ) ] \
+    && remote=$( resolveip -s ${SSH_CLIENT%% *} ) \
+    || remote=${SSH_CLIENT%% *}
+  RPROMPT=$'%{\e[4;33m%}'${remote}$'%{\e[m%}'
 fi
+
 
 # watch for other users
 LOGCHECK=60
