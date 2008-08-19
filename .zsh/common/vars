@@ -20,7 +20,7 @@ else
   # SSH connection
   PS1=$'%{\e[m%}%B%D{%T}%b %B%{\e[32m%}%n@%{\e[7m%}%m%{\e[0;34m%} %~ %(!.#.$) %b%{\e[m%}'
   [ -x $( which resolveip ) ] \
-    && remote=$( resolveip -s ${SSH_CLIENT%% *} ) \
+    && remote=$( resolveip -s ${SSH_CLIENT%% *} 2>/dev/null ) \
     || remote=${SSH_CLIENT%% *}
   RPROMPT=$'%{\e[4;33m%}'${remote}$'%{\e[m%}'
 fi
