@@ -1,16 +1,28 @@
 # base ZSH file directory
 ZSHDIR="${HOME}/.zsh"
 
+# require utility functions
+. "$ZSHDIR/util"
+
 typeset -Ua ZSHRC_CLASSES
 typeset -Ua ZSHRC_FUNCTIONS
 
 ZSHRC_CLASSES=( common )
 ZSHRC_FUNCTIONS=( misc zsh )
 
+print_trace "Classes: ${ZSHRC_CLASSES[*]}"
+print_trace "Functions: ${ZSHRC_FUNCTIONS[*]}"
+
 # Add host/domain specific zshrc
+print_trace "Before domain-specific"
 [[ -f $ZSHDIR/domains/$(hostname -d) ]]   && . $ZSHDIR/domains/$(hostname -d)
+print_trace "Before host-specific"
 [[ -f $ZSHDIR/hosts/$(hostname -s) ]]     && . $ZSHDIR/hosts/$(hostname -s)
+print_trace "Before fullhost-specific"
 [[ -f $ZSHDIR/fullhosts/$(hostname -f) ]] && . $ZSHDIR/fullhosts/$(hostname -f)
+
+print_trace "Final classes: ${ZSHRC_CLASSES[*]}"
+print_trace "Final functions: ${ZSHRC_FUNCTIONS[*]}"
 
 # load classes and functions
 for c in "${ZSHRC_CLASSES[@]}"; do
