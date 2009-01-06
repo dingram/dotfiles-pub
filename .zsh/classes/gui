@@ -17,7 +17,15 @@ alias sunbird='z sunbird'
 alias thunderbird='z thunderbird'
 
 # keyboard layouts
-alias 'aoeu=setxkbmap gb' # British
-alias 'asdf=setxkbmap gb dvorak 2> /dev/null || setxkbmap dvorak gb 2> /dev/null || setxkbmap dvorak' # Dvorak
+function aoeu() {
+  local kbmodel=$( xprop -root | grep _XKB_RULES | cut -d\" -f4 )
+  setxkbmap -layout gb -model "${kbmodel}"
+}
+
+function asdf() {
+  local kbmodel=$( xprop -root | grep _XKB_RULES | cut -d\" -f4 )
+  setxkbmap -layout dvorak -variant gb -model "${kbmodel}" 2>/dev/null || \
+  setxkbmap -layout dvorak -model "${kbmodel}"
+}
 
 # vim: ft=zsh et ts=2 sw=2
