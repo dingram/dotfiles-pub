@@ -39,7 +39,8 @@ Control Mod1 Shift X :Exec amarok
 
 Mod4 S D    :Exec ~/bin/screensaver disable
 Mod4 S E    :Exec ~/bin/screensaver enable
-Mod4 L      :Exec ~/bin/screensaver lock
+#Mod4 L      :Exec ~/bin/screensaver lock
+Mod4 L      :Exec xlock -mode laser
 
 Control Mod4 0  :MoveTo 0 0
 Control Mod4 1  :SetHead 1
@@ -72,8 +73,9 @@ Control Shift Mod4 Left  :Exec 3ddesk --view=goleft
 Control Shift Mod4 Right :Exec 3ddesk --view=goright
 
 ## screenshots ###########################
-None    Print :Exec import -window root ~/screenshots/screenshot-`date +%Y%m%d-%H%M%S`.png
-Control Print :Exec import ~/screenshots/screenshot-`date +%Y%m%d-%H%M%S`.png
+None    Print :Exec import -window root ~/screenshots/screenshot-`date +%Y%m%d- %H%M%S`.png && zsh -c 'scp ~/screenshots/*(om[1]) retiarius@siterage.net:www/www.dmi.me.uk/screenshots/'
+Control Print :Exec import ~/screenshots/screenshot-`date +%Y%m%d-%H%M%S`.png   && zsh -c 'scp ~/screenshots/*(om[1]) retiarius@siterage.net:www/www.dmi.me.uk/screenshots/'
+
 
 ###############################################################################
 Control Mod1 X        :Maximize
@@ -89,7 +91,7 @@ Mod4    Escape        :Exec ~/bin/swapkbd
 Mod4    Pause         :Exec ~/bin/sleepytime nokbd
 
 ###############################################################################
-None XF86AudioMute        :Exec amixer sset 'Audigy Analog/Digital Output Jack' toggle && ~/bin/voldisp
+None XF86AudioMute        :Exec amixer sset Master toggle && ~/bin/voldisp
 None XF86AudioRaiseVolume :Exec amixer sset Master 5%+ on && ~/bin/voldisp
 None XF86AudioLowerVolume :Exec amixer sset Master 5%- on && ~/bin/voldisp
 
@@ -187,3 +189,4 @@ None XF86Away        :Exec xterm & osd_echo "xterm"
 None    XF86WebCam   :Workspace 1
 Control XF86WebCam   :Exec sudo -k; gksudo -m 'Shutting down system. Enter user password below:' halt
 
+Mod4 E :Exec wmctrl -r mplayer -b toggle,below

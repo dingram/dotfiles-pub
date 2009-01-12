@@ -11,6 +11,12 @@
 userresources=$HOME/.Xdefaults
 usermodmap=$HOME/.Xmodmap
 
+if [[ -n $( xdpyinfo | grep -o '[0-9]*x1050' ) ]]; then
+  sed -i -e 's/XTerm.geometry:.*/XTerm*geometry: +50+300/;' "$userresources"
+else
+  sed -i -e 's/XTerm.geometry:.*/XTerm*geometry: +50+50/;' "$userresources"
+fi
+
 if [ -f $userresources ]; then
     xrdb -merge $userresources
 fi
@@ -18,7 +24,16 @@ fi
 if [ -f $usermodmap ]; then
     xmodmap $usermodmap
 fi
-xmodmap -e "pointer = 1 2 3 6 7 4 5"
+#xmodmap -e "pointer = 1 2 3 6 7 4 5"
+
+net_if=( eth0 wlan0 )
+ifout="$( ifconfig | sed -n '/inet addr/p; /^[^ ]/p;' )"
+netup=0
+for intf in "${net_if[@]}"; do
+  if [[ -n $( echo "${ifout}" | grep "^${intf}" ) ]]; then
+    netup=1
+  fi
+done
 
 /usr/bin/numlockx
 
@@ -61,7 +76,7 @@ root-tail -font "-*-fxd-medium-r-normal-*-*-*-*-*-*-*-*-"                       
           /var/log/messages,dimgray,'Syslog'
 
 
-$HOME/bin/twhirl &
+#$HOME/bin/twhirl &
 
 # And last but not least we start fluxbox.
 # Because it is the last app you have to run it with ''exec'' before it.

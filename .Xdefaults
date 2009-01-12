@@ -4,7 +4,7 @@ XTerm*faceName:SaxMono
 XTerm*faceSize:12
 XTerm*HiForeColor: linen
 XTerm*HiBackColor: #040404
-XTerm*geometry: +50+100
+XTerm*geometry: +50+300
 XTerm*saveLines: 5000
 XTerm*colorBDMode: 1
 XTerm*boldColors: 0

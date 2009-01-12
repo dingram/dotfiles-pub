@@ -44,7 +44,7 @@ SPROMPT='zsh: correct '%R' to '%r' ? ([Y]es/[N]o/[E]dit/[A]bort) '
 # Set less options
 if [ -x `which less` ]; then
   export PAGER="less"
-  export LESS="-mQRSi"
+  export LESS="-mQRSiF"
   export LESSOPEN="| lesspipe.sh %s"
   unset LESSCLOSE
   export LESS_TERMCAP_mb=$'\E[01;31m'

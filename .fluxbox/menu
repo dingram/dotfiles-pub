@@ -13,190 +13,52 @@
 #
 # - To prevent any other app from overwriting your menu
 #   you can change the menu name in .fluxbox/init to:
-#     session.menuFile: /home/you/.fluxbox/my-menu
-[begin] (Fluxbox)
-      [exec] (xterm) {xterm} </usr/share/pixmaps/gnome-color-xterm.png>
-      [exec] (opera) {env QT_XFT=true opera} </usr/share/pixmaps/opera.xpm>
+#     session.menuFile: /var/tmp/portage/x11-wm/fluxbox-1.0.0-r2/temp/home/.fluxbox/my-menu
+[begin] (Fluxbox 1.0.0)
+[encoding] {UTF-8}
+      [exec] (xterm) {xterm} 
+      [exec] (links) {xterm -e links fluxbox.org} 
+      [exec]   (Run) {fbrun } 
 [submenu] (Terminals)
-      [exec] (xterm) {xterm} </usr/share/pixmaps/gnome-color-xterm.png>
-      [exec] (gnome-terminal) {gnome-terminal} </usr/share/pixmaps/gnome-terminal.png>
-      [exec] (Eterm) {Eterm} </usr/share/pixmaps/gnome-eterm.png>
-      [exec] (aterm) {aterm} </usr/share/pixmaps/gnome-term.png>
+      [exec]   (xterm) {xterm} 
 [end]
 [submenu] (Net)
 [submenu] (Browsers)
-      [exec] (firefox) {firefox} </usr/share/pixmaps/mozillafirefox-bin-icon.png>
-      [exec] (galeon) {galeon} </usr/share/galeon/galeon.png>
-      [exec] (mozilla) {mozilla} </usr/share/pixmaps/mozilla-icon.png>
-      [exec] (dillo) {dillo} 
-      [exec] (vncviewer) {vncviewer} 
-      [exec] (links-graphic) {links -driver x www.google.com} </usr/share/pixmaps/links.xpm>
-      [exec] (opera) {env QT_XFT=true opera} </usr/share/pixmaps/opera.xpm>
-      [exec] (links) {xterm -e links www.google.com} </usr/share/pixmaps/links.xpm>
-      [exec] (lynx) {xterm -e lynx www.google.com} 
+      [exec]   (links-graphic) {links -driver x fluxbox.org} 
+      [exec]   (links) {xterm -e links fluxbox.org} 
 [end]
-[submenu] (IM)
-      [exec] (gaim) {gaim} </usr/share/pixmaps/gaim.png>
-      [exec] (centericq) {xterm -e centericq} 
-[end]
-[submenu] (Mail)
-      [exec] (evolution) {evolution} 
-[end]
-[submenu] (IRC)
-      [exec] (xchat-2) {xchat-2} 
-[end]
-[submenu] (P2P)
-      [exec] (amule) {amule} </usr/share/pixmaps/amule.xpm>
-[end]
-[submenu] (ftp)
-      [exec] (ftp) {xterm -e ftp} 
-[end]
-      [exec] (xnmap) {xnmap} 
-      [exec] (skype) {skype} </usr/share/icons/hicolor/16x16/apps/skype.png>
 [end]
 [submenu] (Editors)
-      [exec] (gvim) {gvim} </usr/share/pixmaps/gvim.xpm>
-      [exec] (gedit) {gedit} 
-      [exec] (xedit) {xedit} 
-      [exec] (evim) {evim} 
-      [exec] (nano) {xterm -e nano} 
-      [exec] (vim) {xterm -e vim} 
-      [exec] (vi) {xterm -e vi} 
-[end]
-[submenu] (File utils)
-      [exec] (rox) {rox} 
-      [exec] (nautilus) {nautilus --no-desktop} 
+      [exec]   (nano) {xterm -e nano} 
+      [exec]   (vim) {xterm -e vim} 
+      [exec]   (vi) {xterm -e vi} 
 [end]
 [submenu] (Multimedia)
-[submenu] (Graphics)
-      [exec] (gimp) {gimp} </usr/share/pixmaps/gnome-gimp.png>
-      [exec] (xv) {xv} 
-      [exec] (xscreensaver-demo) {xscreensaver-demo} </usr/share/pixmaps/xscreensaver.xpm>
-      [exec] (xlock) {xlock} 
-[end]
-[submenu] (Audio)
-      [exec] (xmms) {xmms} </usr/share/pixmaps/xmms.xpm>
-      [exec] (alsaplayer) {alsaplayer} 
-      [exec] (alsamixer) {xterm -e alsamixer} 
-[end]
-[submenu] (Video)
-      [exec] (gtv) {gtv} 
-      [exec] (gmplayer) {gmplayer} </usr/share/pixmaps/mplayer.xpm>
-      [exec] (xcdroast) {xcdroast} </usr/share/pixmaps/gcdmaster.png>
-      [exec] (realplay) {realplay} </usr/share/icons/hicolor/16x16/apps/realplay.png>
-[end]
 [submenu] (X-utils)
-      [exec] (xfontsel) {xfontsel} 
-      [exec] (xman) {xman} 
-      [exec] (xload) {xload} 
-      [exec] (editres) {editres} 
-      [exec] (viewres) {viewres} 
-      [exec] (xclock) {xclock} 
-      [exec] (xmag) {xmag} 
-      [exec] (gkrellm2) {gkrellm2} 
-      [exec] (vmware) {vmware} 
-      [exec] (Reload .Xdefaults) {xrdb -load /home/dave/.Xdefaults} 
+      [exec]   (xclock) {xclock} 
+      [exec] (Reload .Xdefaults) {xrdb -load /var/tmp/portage/x11-wm/fluxbox-1.0.0-r2/temp/home/.Xdefaults} 
 [end]
 [end]
 [submenu] (Office)
-      [exec] (xclock) {xclock} 
-      [exec] (xcalc) {xcalc} 
-      [exec] (gv) {gv} </usr/share/pixmaps/gvim.xpm>
-      [exec] (Open Office) {ooffice} </usr/share/icons/hicolor/16x16/apps/ooo_gulls.xpm>
-      [exec] (OO Calc) {oocalc} </usr/share/icons/hicolor/16x16/apps/ooo_calc.xpm>
-      [exec] (OO Writer) {oowriter} </usr/share/icons/hicolor/16x16/apps/ooo_writer.xpm>
-      [exec] (OO Impress) {ooimpress} </usr/share/icons/hicolor/16x16/apps/ooo_impress.xpm>
-      [exec] (OO Draw) {oodraw} </usr/share/icons/hicolor/16x16/apps/ooo_draw.xpm>
-      [exec] (OO Math) {oomath} </usr/share/icons/hicolor/16x16/apps/ooo_math.xpm>
-      [exec] (OO Printer Admin) {oopadmin} </usr/share/icons/hicolor/16x16/apps/ooo_printeradmin.xpm>
-      [exec] (acroread) {acroread} </usr/share/pixmaps/AdobeReader.png>
-      [exec] (xpdf) {xpdf} </usr/share/pixmaps/gnome-pdf.png>
+      [exec]   (xclock) {xclock} 
 [end]
-[submenu] (Games)
-      [exec] (gnibbles) {gnibbles} </usr/share/pixmaps/gnome-nibbles.png>
-      [exec] (gnobots2) {gnobots2} </usr/share/pixmaps/gnome-gnobots2.png>
-      [exec] (gataxx) {gataxx} </usr/share/pixmaps/gataxx.png>
-      [exec] (glines) {glines} </usr/share/pixmaps/glines.png>
-      [exec] (gnect) {gnect} </usr/share/pixmaps/gnect-icon.png>
-      [exec] (mahjongg) {mahjongg} </usr/share/pixmaps/gnome-mahjongg.png>
-      [exec] (gnomine) {gnomine} </usr/share/pixmaps/gnome-gnomine.png>
-      [exec] (gnome-stones) {gnome-stones} </usr/share/pixmaps/gnome-stones.png>
-      [exec] (gnometris) {gnometris} </usr/share/pixmaps/gnome-gtetris.png>
-      [exec] (gnotravex) {gnotravex} </usr/share/pixmaps/gnome-gnotravex.png>
-      [exec] (gnotski) {gnotski} </usr/share/pixmaps/gnotski-icon.png>
-      [exec] (iagno) {iagno} </usr/share/pixmaps/iagno.png>
-      [exec] (gtali) {gtali} </usr/share/pixmaps/gnome-gtali.png>
-      [exec] (tuxracer) {tuxracer} 
-      [exec] (xeyes) {xeyes} 
-      [exec] (same-gnome) {same-gnome} 
-      [exec] (sol) {sol} 
+[submenu] (System Tools)
+      [exec]   (top) {xterm -e top} 
 [end]
-[submenu] (Gnome-menus)
-[submenu] (Games)
-      [exec] (darwinia) {/usr/local/games/darwinia//darwinia} </usr/local/games/darwinia//darwinian.png>
-[end]
-[submenu] (System)
-      [exec] (System monitor) {gtop} </usr/share/pixmaps/gnome-gtop.png>
-[end]
-[submenu] (TransGaming)
-[submenu] (Programs)
-[submenu] (WebZIP)
-      [exec] (Uninstall WebZIP) {cedega -workdir "/home/dave/.transgaming/c_drive/Program Files/WebZIP 7" "C:/Program Files/WebZIP 7/SXUNINST.EXE"  } </home/dave/.gnome/apps/TransGaming/Programs/WebZIP/WebZIP.xpm>
-      [exec] (WebZIP) {cedega -workdir "/home/dave/.transgaming/c_drive/Program Files/WebZIP 7" "C:/Program Files/WebZIP 7/WebZIP.exe"  } </home/dave/.gnome/apps/TransGaming/Programs/WebZIP/WebZIP.xpm>
-[end]
-[end]
-[end]
-[submenu] (Utilities)
-      [exec] (gtkdiff) {gtkdiff} 
-[end]
-[end]
-[separator]
 [submenu] (fluxbox menu)
       [config] (Configure) 
 [submenu] (Styles)
       [include] (/usr/share/fluxbox/menu.d/styles/) 
 [end]
-[submenu] (Backgrounds) {Set the Background}
-      [exec] (Random Background) {fbsetbg -r /home/dave/.fluxbox/backgrounds} 
-      [exec] (6thSPIRIT) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/6thSPIRIT.jpg" } 
-      [exec] (Curiousity_by_Lucifer_Enterprises) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Curiousity_by_Lucifer_Enterprises.jpg" } 
-      [exec] (Dawn_Panorama_by_en_tyrael) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Dawn_Panorama_by_en_tyrael.jpg" } 
-      [exec] (Disturbing_by_f_barros) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Disturbing_by_f_barros.jpg" } 
-      [exec] (Fate_X) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Fate_X.jpg" } 
-      [exec] (Flying_Free_aeonflux707_by_aeonflux707) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Flying_Free_aeonflux707_by_aeonflux707.jpg" } 
-      [exec] (Frog_by_nicobou) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Frog_by_nicobou.jpg" } 
-      [exec] (Inner_Workings_by_nebu) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Inner_Workings_by_nebu.jpg" } 
-      [exec] (Logo_Evolution) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Logo_Evolution.jpg" } 
-      [exec] (MISSION_FOR_THE_PLANET_by_mrastro316) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/MISSION_FOR_THE_PLANET_by_mrastro316.jpg" } 
-      [exec] (Parallel_Dimensions) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Parallel_Dimensions.jpg" } 
-      [exec] (Someone_____by_cliq) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Someone_____by_cliq.jpg" } 
-      [exec] (Spheres_by_Frelon) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Spheres_by_Frelon.jpg" } 
-      [exec] (Summer_Sheeps_by_bsign) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Summer_Sheeps_by_bsign.jpg" } 
-      [exec] (The_Edge_of_the_Universe) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/The_Edge_of_the_Universe.jpg" } 
-      [exec] (Truth_is_Here_by_konomendragon) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Truth_is_Here_by_konomendragon.jpg" } 
-      [exec] (Tux_In_black_by_bubka) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Tux_In_black_by_bubka.jpg" } 
-      [exec] (WcW___Azurea_by_hypnotic) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/WcW___Azurea_by_hypnotic.jpg" } 
-      [exec] (What__by_stefanye) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/What__by_stefanye.png" } 
-      [exec] (Wish_You_Were_Here_by_thegoodness) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/Wish_You_Were_Here_by_thegoodness.jpg" } 
-      [exec] (cloud_burst_WP_by_zilla774) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/cloud_burst_WP_by_zilla774.jpg" } 
-      [exec] (marmaris_by_arthitect) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/marmaris_by_arthitect.jpg" } 
-      [exec] (sheep_by_teocava) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/sheep_by_teocava.jpg" } 
-      [exec] (triangular_light_blue_by_kuller_ei) {fbsetbg -a "/home/dave/.fluxbox/backgrounds/triangular_light_blue_by_kuller_ei.jpg" } 
-[end]
       [workspaces] (Workspace List) 
 [submenu] (Tools)
       [exec] (Window name) {xprop WM_CLASS|cut -d \" -f 2|xmessage -file - -center} 
-      [exec] (Screenshot - JPG) {import screenshot.jpg && display -resize 50% screenshot.jpg} 
-      [exec] (Screenshot - PNG) {import screenshot.png && display -resize 50% screenshot.png} 
-      [exec] (Regen Menu) {fluxbox-generate_menu} 
+      [exec] (Run) {fbrun } 
+      [exec] (Regen Menu) {/var/tmp/portage/x11-wm/fluxbox-1.0.0-r2/work/fluxbox-1.0.0/util/fluxbox-generate_menu -is -ds} 
 [end]
 [submenu] (Window Managers)
-      [restart] (enlightenment) {enlightenment} 
-      [restart] (openbox) {openbox} </usr/share/pixmaps/openbox.png>
-      [restart] (evilwm) {evilwm} 
-      [restart] (gnome) {gnome-session} 
+      [restart] (twm) {twm} 
 [end]
-      [exec] (Lock screen) {xlock} 
       [commanddialog] (Fluxbox Command) 
       [reconfig] (Reload config) 
       [restart] (Restart) 
@@ -204,4 +66,5 @@
       [separator] 
       [exit] (Exit) 
 [end]
+[endencoding]
 [end]
