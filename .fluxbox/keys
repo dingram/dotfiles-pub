@@ -73,8 +73,8 @@ Control Shift Mod4 Left  :Exec 3ddesk --view=goleft
 Control Shift Mod4 Right :Exec 3ddesk --view=goright
 
 ## screenshots ###########################
-None    Print :Exec import -window root ~/screenshots/screenshot-`date +%Y%m%d- %H%M%S`.png && zsh -c 'scp ~/screenshots/*(om[1]) retiarius@siterage.net:www/www.dmi.me.uk/screenshots/'
-Control Print :Exec import ~/screenshots/screenshot-`date +%Y%m%d-%H%M%S`.png   && zsh -c 'scp ~/screenshots/*(om[1]) retiarius@siterage.net:www/www.dmi.me.uk/screenshots/'
+None    Print :Exec import -window root ~/screenshots/screenshot-`date +%Y%m%d- %H%M%S`.png && zsh -c 'scp ~/screenshots/*(om[1]) dmi@siterage.net:www/dmi.me.uk/htdocs/screenshots/'
+Control Print :Exec import ~/screenshots/screenshot-`date +%Y%m%d-%H%M%S`.png   && zsh -c 'scp ~/screenshots/*(om[1]) dmi@siterage.net:www/dmi.me.uk/htdocs/screenshots/'
 
 
 ###############################################################################

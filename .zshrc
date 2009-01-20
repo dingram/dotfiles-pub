@@ -15,11 +15,22 @@ print_trace "Functions: ${ZSHRC_FUNCTIONS[*]}"
 
 # Add host/domain specific zshrc
 print_trace "Before domain-specific"
-[[ -f $ZSHDIR/domains/$(hostname -d) ]]   && . $ZSHDIR/domains/$(hostname -d)
-print_trace "Before host-specific"
-[[ -f $ZSHDIR/hosts/$(hostname -s) ]]     && . $ZSHDIR/hosts/$(hostname -s)
-print_trace "Before fullhost-specific"
-[[ -f $ZSHDIR/fullhosts/$(hostname -f) ]] && . $ZSHDIR/fullhosts/$(hostname -f)
+
+# check all domain components
+local d1=$(hostname -d) d2='' thishost=$( hostname -s ) thisfullhost=$( hostname -f )
+while [[ "$d1" != "${d1#*.}" ]]; do
+  d2="${d1##*.}${d2:+.}${d2}"
+  d1="${d1%.*}"
+  print_trace "Before domain $d2"
+  [[ -f "$ZSHDIR/domains/$d2" ]] && . "$ZSHDIR/domains/$d2"
+done
+print_trace "Before domain $d1${d2:+.}$d2"
+[[ -n "$d1" ]] && [[ -f "$ZSHDIR/domains/$d1${d2:+.}$d2" ]] && . "$ZSHDIR/domains/$d1${d2:+.}$d2"
+
+print_trace "Before host-specific: ${thishost}"
+[[ -f "$ZSHDIR/hosts/${thishost}" ]]     && . "$ZSHDIR/hosts/${thishost}"
+print_trace "Before fullhost-specific: ${thisfullhost}"
+[[ -f "$ZSHDIR/fullhosts/${thisfullhost}" ]] && . "$ZSHDIR/fullhosts/${thisfullhost}"
 
 print_trace "Final classes: ${ZSHRC_CLASSES[*]}"
 print_trace "Final functions: ${ZSHRC_FUNCTIONS[*]}"

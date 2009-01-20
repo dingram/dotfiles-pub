@@ -48,7 +48,7 @@
 [end]
 [app] (class=Thunderbird-bin) {1}
   [Workspace]	{2}
-  [Dimensions]	{1280 514}
+  [Dimensions]	{1280 509}
   [Position]	(UPPERLEFT)	{0 0}
   [Close]	{yes}
 [end]
