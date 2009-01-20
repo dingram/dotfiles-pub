@@ -1,13 +1,13 @@
 # search for various types of README file in dir and display them in $PAGER
 readme ()
 {
-	local files
-	files=(./(#i)*readme*(ND))
-	if (($#files))
-	then $PAGER $files
-	else
-	print 'No README files.'
-	fi
+  local files
+  files=(./(#i)*readme*(ND))
+  if (($#files)); then
+    $PAGER $files
+  else
+    print ' * No README files.'
+  fi
 }
 
 # show status for dd
@@ -25,13 +25,25 @@ vimx() {
   vim "$@"
 }
 
+# Open man page in vim
 vman() {
   /usr/bin/man $* | col -b | vim -c 'set ft=man nomod nolist' -
 }
 
+# Look up a scrabble word
 scrab() {
-  local word="$1"
-  curl -s 'http://spod.cx/cheat-o-matic.shtml?letters='"${word}"'&dict=sowpods&Cheat=Cheat' | sed -rn "/^<a href/{s#.*(['\"]>|a> )##; s#<br/>##; s#</a>##; p}" | tr 'A-Z' 'a-z'
+  local word="$1" min="$2" max="$3"
+  if [[ -n "$min" && -n "$max" && "$max" -lt "$min" ]]; then
+    local tmp=$min
+    min=$max
+    max=$tmp
+  fi
+  curl -s 'http://spod.cx/cheat-o-matic.shtml?letters='"${word}"'&dict=sowpods&Cheat=Cheat' | sed -rn "/^<a href.*word=[^'\"]{$min,$max}['\"]/{s#.*word=##; s#'>.*##; p}" | tr 'A-Z' 'a-z'
+}
+
+# Copy to http://files.dmi.me.uk/
+scpf() {
+  scp "$@" dmi@scaramanga.siterage.net:www/dmi.me.uk/htdocs/files/
 }
 
 # vim: ft=zsh et ts=2 sw=2

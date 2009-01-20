@@ -6,6 +6,11 @@ path=( /usr/lib/colorgcc/bin $path )
 
 my_accounts=(
   {root,retiarius}@{scaramanga.,}siterage.net
+  {root,dmi,retiarius}@{scaramanga.,}siterage.net
+  dmi@heeps.union.ic.ac.uk
+  dmi@dev2.clickuni.com
+  dmi@gslocal
+  dave@{bb.dmi.me.uk,blackb0x.zapto.org}
   {dave,root}@localhost
 )
 

@@ -42,10 +42,12 @@ LISTPROMPT=''
 SPROMPT='zsh: correct '%R' to '%r' ? ([Y]es/[N]o/[E]dit/[A]bort) '
 
 # Set less options
-if [ -x `which less` ]; then
+if [[ -x `which less` ]]; then
   export PAGER="less"
   export LESS="-mQRSiF"
-  export LESSOPEN="| lesspipe.sh %s"
+  if [[ -x `which lesspipe.sh` ]]; then
+    export LESSOPEN="| lesspipe.sh %s"
+  fi
   unset LESSCLOSE
   export LESS_TERMCAP_mb=$'\E[01;31m'
   export LESS_TERMCAP_md=$'\E[01;31m'
@@ -57,15 +59,19 @@ if [ -x `which less` ]; then
 fi
 
 # Set default editor
-if [ -x `which vim` ]; then
+if [[ -x `which vim` ]]; then
   export EDITOR="vim"
-  export USE_EDITOR="$EDITOR"
-  export VISUAL="g$EDITOR -f"
+  if [[ -n "$DISPLAY" ]]; then
+    export VISUAL="gvim -f"
+  fi
+elif [[ -x `which nano` ]]; then
+  export EDITOR="nano"
 fi
+export USE_EDITOR="$EDITOR"
 
 # Enable color support of ls
-if [ "$TERM" != "dumb" ]; then
-  if [ -x `which dircolors` ]; then
+if [[ "$TERM" != "dumb" ]]; then
+  if [[ -x `which dircolors` ]]; then
     eval `dircolors -b`
     alias 'ls=ls --color=always'
   fi

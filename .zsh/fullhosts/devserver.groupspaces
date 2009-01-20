@@ -1,4 +1,12 @@
 ZSHRC_CLASSES+=( common )
 ZSHRC_FUNCTIONS+=( svn )
 
+my_accounts=(
+  dmi@dev2.clickuni.com
+  dmi@gslocal
+  dave@{bb.dmi.me.uk,blackb0x.zapto.org}
+)
+
+zstyle ':completion:*my-accounts' users-hosts $my_accounts
+
 # vim: ft=zsh et ts=2 sw=2

@@ -1,4 +1,5 @@
 # Short command aliases
+alias d='dirs'
 alias ls='ls --color=always'
 alias l='ls'
 alias ll='ls -l'
@@ -6,6 +7,7 @@ alias la='ls -A'
 alias lq='ls -Q'
 alias lr='ls -R'
 alias lrt='ls -lrt'
+alias lrs='ls -lrS'
 alias j='jobs -l'
 alias v='vim'
 
@@ -35,13 +37,13 @@ alias -s pdf=acroread
 alias -s mid=timidity
 
 # SSH aliases
-alias sshh='ssh heeps.union.ic.ac.uk'
-alias sshp='ssh smcphoenix.hopto.org'
-alias ssht='ssh tainan.smc'
+alias sshb='ssh dave@bb.dmi.me.uk'
+alias sshh='ssh dmi@heeps.union.ic.ac.uk'
+alias sshp='ssh phyreskull@smcphoenix.hopto.org'
 
 alias sshs='ssh root@scaramanga.siterage.net'
 alias sshrs='ssh retiarius@scaramanga.siterage.net'
-alias sshsr='sshrs'
+alias sshds='ssh dmi@scaramanga.siterage.net'
 
 # some global aliases
 alias -g L='| less'
