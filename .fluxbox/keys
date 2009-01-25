@@ -1,9 +1,23 @@
 !mouse actions added by fluxbox-update_configs
+OnTitlebar Mouse2 :StartTabbing
+
+!mouse actions added by fluxbox-update_configs
+OnTitlebar Double Mouse1 :Shade
+OnTitlebar Mouse3 :WindowMenu
+
+!mouse actions added by fluxbox-update_configs
+OnWindow Mod1 Mouse1 :MacroCmd {Raise} {Focus} {StartMoving}
+OnWindow Mod1 Mouse3 :MacroCmd {Raise} {Focus} {StartResizing BottomRight}
+
+!mouse actions added by fluxbox-update_configs
 OnDesktop Mouse1 :hideMenus
 OnDesktop Mouse2 :workspaceMenu
 OnDesktop Mouse3 :rootMenu
 OnDesktop Mouse4 :nextWorkspace
 OnDesktop Mouse5 :prevWorkspace
+
+OnToolbar Mouse4 :nextWorkspace
+OnToolbar Mouse5 :prevWorkspace
 
 None Menu       :RootMenu
 
@@ -39,8 +53,7 @@ Control Mod1 Shift X :Exec amarok
 
 Mod4 S D    :Exec ~/bin/screensaver disable
 Mod4 S E    :Exec ~/bin/screensaver enable
-#Mod4 L      :Exec ~/bin/screensaver lock
-Mod4 L      :Exec xlock -mode laser
+Mod4 L      :Exec ~/bin/screensaver lock
 
 Control Mod4 0  :MoveTo 0 0
 Control Mod4 1  :SetHead 1
@@ -73,8 +86,8 @@ Control Shift Mod4 Left  :Exec 3ddesk --view=goleft
 Control Shift Mod4 Right :Exec 3ddesk --view=goright
 
 ## screenshots ###########################
-None    Print :Exec import -window root ~/screenshots/screenshot-`date +%Y%m%d- %H%M%S`.png && zsh -c 'scp ~/screenshots/*(om[1]) dmi@siterage.net:www/dmi.me.uk/htdocs/screenshots/'
-Control Print :Exec import ~/screenshots/screenshot-`date +%Y%m%d-%H%M%S`.png   && zsh -c 'scp ~/screenshots/*(om[1]) dmi@siterage.net:www/dmi.me.uk/htdocs/screenshots/'
+None    Print :Exec import -window root ~/screenshots/screenshot-`date +%Y%m%d-%H%M%S`.png && zsh -c 'scp ~/screenshots/*(om[1]) dmi@siterage.net:www/dmi.me.uk/htdocs/screenshots/'
+Control Print :Exec import ~/screenshots/screenshot-`date +%Y%m%d-%H%M%S`.png && zsh -c 'scp ~/screenshots/*(om[1]) dmi@siterage.net:www/dmi.me.uk/htdocs/screenshots/'
 
 
 ###############################################################################
