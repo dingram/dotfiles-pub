@@ -1,5 +1,16 @@
 unkeyword() {
-  sudo zsh -c "echo \"$1 ~x86\" >> /etc/portage/package.keywords"
+  if [[ "$1" != [a-zA-Z]* ]]; then
+    pkg=$( echo "$1" | sed -re 's/^[<=>]+//; s/-[0-9.prec]*[0-9]$//;' )
+    ebuild="/usr/portage/${pkg}/$( echo "$1" | sed -re 's/^[<=>]+//; s!^.*/!!' ).ebuild"
+  else
+    pkg="$1"
+  fi
+
+  if [[ "$pkg" == */* && -d "/usr/portage/$pkg" ]]; then
+    sudo zsh -c "echo \"$1 ~x86\" >> /etc/portage/package.keywords"
+  else
+    print_err "$1 is not a valid package atom"
+  fi
 }
 
 setuse() {
