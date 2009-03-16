@@ -43,7 +43,21 @@ scrab() {
 
 # Copy to http://files.dmi.me.uk/
 scpf() {
-  scp "$@" dmi@scaramanga.siterage.net:www/dmi.me.uk/htdocs/files/
+  local user=dmi host=scaramanga.siterage.net dir=www/dmi.me.uk/htdocs/files/
+  if [[ -n "$SCPF_DIR" ]]; then
+    dir="${dir%/}/${${SCPF_DIR#/}%/}/"
+  fi
+
+  scp -oVisualHostKey=no "$@" ${user}@${host}:${dir}
+  if [[ $? != 0 ]]; then
+    print_err "Copy failed -- not setting permissions"
+    return
+  fi
+
+  ssh -oVisualHostKey=no ${user}@${host} chmod a+r "${(@q)${@:t}/#/${dir}}" &> /dev/null
+  if [[ $? != 0 ]]; then
+    print_err "Failed to run chmod"
+  fi
 }
 
 # vim: ft=zsh et ts=2 sw=2
