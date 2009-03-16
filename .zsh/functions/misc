@@ -43,9 +43,10 @@ scrab() {
 
 # Copy to http://files.dmi.me.uk/
 scpf() {
-  local user=dmi host=scaramanga.siterage.net dir=www/dmi.me.uk/htdocs/files/
+  local user=dmi host=scaramanga.siterage.net dir=www/dmi.me.uk/htdocs/files/ url=http://files.dmi.me.uk/
   if [[ -n "$SCPF_DIR" ]]; then
     dir="${dir%/}/${${SCPF_DIR#/}%/}/"
+    url="${url%/}/${${SCPF_DIR#/}%/}/"
   fi
 
   scp -oVisualHostKey=no "$@" ${user}@${host}:${dir}
@@ -58,6 +59,9 @@ scpf() {
   if [[ $? != 0 ]]; then
     print_err "Failed to run chmod"
   fi
+
+  print
+  print -l "${(@q)${@:t}/#/${url}}"
 }
 
 # vim: ft=zsh et ts=2 sw=2

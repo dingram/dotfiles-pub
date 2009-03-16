@@ -6,7 +6,8 @@ unkeyword() {
     pkg="$1"
   fi
 
-  if [[ "$pkg" == */* && -d "/usr/portage/$pkg" ]]; then
+  #if [[ "$pkg" == */* && -d "/usr/portage/$pkg" ]]; then
+  if [[ "$pkg" == */* ]]; then
     sudo zsh -c "echo \"$1 ~x86\" >> /etc/portage/package.keywords"
   else
     print_err "$1 is not a valid package atom"
