@@ -15,14 +15,14 @@ if [[ "$TERM" == 'vt320' ]]; then
   PS1=$'%(!.#.$) '
 elif [[ -z "$SSH_CLIENT" ]]; then
   # Not via SSH
-  PS1=$'%{\e[m%}%B%D{%T}%b %B%{\e[32m%}%n@%m %{\e[34m%}%~ %(!.#.$) %b%{\e[m%}'
+  PS1="%{${terminfo[sgr0]}%}%B%D{%T}%b %B%{${fg[green]}%}%n@%m %{${fg[blue]}%}%~ %(!.#.$) %b%{${terminfo[sgr0]}%}"
 else
   # SSH connection
-  PS1=$'%{\e[m%}%B%D{%T}%b %B%{\e[32m%}%n@%{\e[7m%}%m%{\e[0;34m%} %~ %(!.#.$) %b%{\e[m%}'
+  PS1="%{${terminfo[sgr0]}%}%B%D{%T}%b %B%{${fg[green]}%}%n@%{${terminfo[rev]}%}%m%{${terminfo[sgr0]}${fg[blue]}%} %~ %(!.#.$) %b%{${terminfo[sgr0]}%}"
   [ -x $( which resolveip 2>/dev/null ) ] \
     && remote=$( resolveip -s ${SSH_CLIENT%% *} 2>/dev/null ) \
     || remote=${SSH_CLIENT%% *}
-  RPROMPT=$'%{\e[4;33m%}'${remote}$'%{\e[m%}'
+  RPROMPT="%{${terminfo[smul]}${fg[yellow]}%}${remote}%{${terminfo[sgr0]}%}"
 fi
 
 
@@ -49,13 +49,13 @@ if [[ -x `which less` ]]; then
     export LESSOPEN="| lesspipe.sh %s"
   fi
   unset LESSCLOSE
-  export LESS_TERMCAP_mb=$'\E[01;31m'
-  export LESS_TERMCAP_md=$'\E[01;31m'
-  export LESS_TERMCAP_me=$'\E[0m'
-  export LESS_TERMCAP_se=$'\E[0m'
-  export LESS_TERMCAP_so=$'\E[01;44;33m'
-  export LESS_TERMCAP_ue=$'\E[0m'
-  export LESS_TERMCAP_us=$'\E[01;32m'
+  export LESS_TERMCAP_mb="${terminfo[bold]}${fg[blue]}"
+  export LESS_TERMCAP_md="${terminfo[bold]}${fg[red]}"
+  export LESS_TERMCAP_me="${terminfo[sgr0]}"
+  export LESS_TERMCAP_se="${terminfo[sgr0]}"
+  export LESS_TERMCAP_so="${terminfo[bold]}${bg[blue]}${fg[yellow]}"
+  export LESS_TERMCAP_ue="${terminfo[sgr0]}"
+  export LESS_TERMCAP_us="${terminfo[bold]}${fg[green]}"
 fi
 
 # Set default editor

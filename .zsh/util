@@ -1,5 +1,19 @@
 ZSH_UTIL_INDENT=""
 
+###
+# See if we can use colors.
+
+autoload colors zsh/terminfo
+if [[ "$terminfo[colors]" -ge 8 ]]; then
+  colors
+fi
+for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
+  eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
+  eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
+  (( count = $count + 1 ))
+done
+PR_NO_COLOUR="%{$terminfo[sgr0]%}"
+
 function collect_args {
   local f=""
   local m=""
@@ -29,27 +43,27 @@ function dooutdent {
 
 function print_err {
   eval $( collect_args "$@" )
-  print ${(z)f} " \e[1;31m*\e[m${ZSH_UTIL_INDENT}$m"
+  print ${(z)f} " ${terminfo[bold]}${fg[red]}*${terminfo[sgr0]}${ZSH_UTIL_INDENT}$m"
 }
 
 function print_warn {
   eval $( collect_args "$@" )
-  print ${(z)f} " \e[1;33m*\e[m${ZSH_UTIL_INDENT}$m"
+  print ${(z)f} " ${terminfo[bold]}${fg[yellow]}*${terminfo[sgr0]}${ZSH_UTIL_INDENT}$m"
 }
 
 function print_ok {
   eval $( collect_args "$@" )
-  print ${(z)f} " \e[1;32m*\e[m${ZSH_UTIL_INDENT}$m"
+  print ${(z)f} " ${terminfo[bold]}${fg[green]}*${terminfo[sgr0]}${ZSH_UTIL_INDENT}$m"
 }
 
 function print_info {
   eval $( collect_args "$@" )
-  print ${(z)f} "\e[1;32m>>>\e[m${ZSH_UTIL_INDENT}$m"
+  print ${(z)f} "${terminfo[bold]}${fg[green]}>>>${terminfo[sgr0]}${ZSH_UTIL_INDENT}$m"
 }
 
 function print_debug {
   eval $( collect_args "$@" )
-  print ${(z)f} "\e[1;36m>>>\e[m${ZSH_UTIL_INDENT}$m"
+  print ${(z)f} "${terminfo[bold]}${fg[cyan]}>>>${terminfo[sgr0]}${ZSH_UTIL_INDENT}$m"
 }
 
 function print_trace {
@@ -58,7 +72,7 @@ function print_trace {
   local oldfmt=${$(typeset -p SECONDS)[2]}
   # only six decimal place resolution for SECONDS
   typeset -F 6 SECONDS
-  print ${(z)f} "\e[1;35m>>>\e[m [${SECONDS}]${ZSH_UTIL_INDENT}$m"
+  print ${(z)f} "${terminfo[bold]}${fg[magenta]}>>>${terminfo[sgr0]} [${SECONDS}]${ZSH_UTIL_INDENT}$m"
   typeset ${oldfmt[1,2]} ${oldfmt[3,20]} SECONDS
 }
 
