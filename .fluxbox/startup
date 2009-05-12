@@ -50,8 +50,8 @@ fbsetbg -l
 # Beagle!
 #/usr/bin/beagled
 
-pidgin &
-skype &
+#pidgin &
+#skype &
 
 bluetooth-applet &
 
@@ -62,18 +62,20 @@ bluetooth-applet &
 #wmcpuload -bl &
 #wmupmon -bl &
 
+xset m 5 1
+
 conky
 
 #firefox-bin &
 opera &
 thunderbird-bin &
 
-root-tail -font "-*-fxd-medium-r-normal-*-*-*-*-*-*-*-*-"                                             \
-          -minspace -f -g 1260x889+1290+135 -wordwrap                                                 \
-          --cont-color darkslategray                                                                  \
-          /var/log/kernel.log,goldenrod,'Kernel'                                                      \
-          /var/log/messages.sshd,slateblue,'SSH'                                                      \
-          /var/log/messages,dimgray,'Syslog'
+#root-tail -font "-*-fxd-medium-r-normal-*-*-*-*-*-*-*-*-"                                             \
+#          -minspace -f -g 1260x889+1290+135 -wordwrap                                                 \
+#          --cont-color darkslategray                                                                  \
+#          /var/log/kernel.log,goldenrod,'Kernel'                                                      \
+#          /var/log/messages.sshd,slateblue,'SSH'                                                      \
+#          /var/log/messages,dimgray,'Syslog'
 
 
 #$HOME/bin/twhirl &

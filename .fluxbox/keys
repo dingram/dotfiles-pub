@@ -115,6 +115,7 @@ None XF86AudioNext        :Exec /home/dave/bin/mmctl next
 
 None 176 :Exec amixer sset Master 5%+ on && ~/bin/voldisp
 None 174 :Exec amixer sset Master 5%- on && ~/bin/voldisp
+None 160 :Exec amixer sset Master toggle && ~/bin/voldisp
 
 None 144 :Exec /home/dave/bin/mmctl prev
 None 162 :Exec /home/dave/bin/mmctl toggle

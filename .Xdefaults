@@ -4,8 +4,15 @@ XTerm*faceName:SaxMono
 XTerm*faceSize:12
 XTerm*HiForeColor: linen
 XTerm*HiBackColor: #040404
-XTerm*geometry: +50+300
+XTerm*geometry: +50+50
 XTerm*saveLines: 5000
 XTerm*colorBDMode: 1
 XTerm*boldColors: 0
 XTerm*colorBD: white
+
+xdaliclock.mode: 24
+xdaliclock.datemode: yy/mm/dd
+xdaliclock.seconds: True
+xdaliclock.cycle: False
+xdaliclock.font: BUILTIN3
+xdaliclock.fullscreen: True
