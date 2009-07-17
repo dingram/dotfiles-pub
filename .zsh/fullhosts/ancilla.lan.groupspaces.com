@@ -1,8 +1,8 @@
-ZSHRC_CLASSES+=( common )
+ZSHRC_CLASSES+=( common gentoo )
 ZSHRC_FUNCTIONS+=( svn )
 
 my_accounts=(
-  dmi@dev2.clickuni.com
+  dmi@dev.groupspaces.com
   dmi@gslocal
   dave@{bb.dmi.me.uk,blackb0x.zapto.org}
 )
