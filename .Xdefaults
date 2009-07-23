@@ -1,3 +1,4 @@
+*dpi:85
 XTerm*Background:black
 XTerm*Foreground:grey
 XTerm*faceName:SaxMono
@@ -9,6 +10,10 @@ XTerm*saveLines: 5000
 XTerm*colorBDMode: 1
 XTerm*boldColors: 0
 XTerm*colorBD: white
+XTerm*dpi:75
+XTerm*allowTcapOps:true
+XTerm*utf8:1
+XTerm*termName: xterm-256color
 
 xdaliclock.mode: 24
 xdaliclock.datemode: yy/mm/dd

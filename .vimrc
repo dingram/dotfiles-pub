@@ -53,13 +53,16 @@ else " Assume Linux-specific options
   set shell=zsh
 endif
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Colour scheme
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('gui_running')
   colorscheme desert
+elseif &t_Co > 16
+  colorscheme inkpot
 else
-  colorscheme delek " or elflord?
+  colorscheme delek
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
