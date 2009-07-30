@@ -15,14 +15,14 @@ if [[ "$TERM" == 'vt320' ]]; then
   PS1=$'%(!.#.$) '
 elif [[ -z "$SSH_CLIENT" ]]; then
   # Not via SSH
-  PS1="%{${terminfo[sgr0]}%}%B%D{%T}%b %B%{${fg[green]}%}%n@%m %{${fg[blue]}%}%~ %(!.#.$) %b%{${terminfo[sgr0]}%}"
+  PS1="${PR_NO_COLOUR}%B%D{%T}%b %B${PR_GREEN}%n@%m ${PR_BLUE}%~ %(!.#.$) %b${PR_NO_COLOUR}"
 else
   # SSH connection
-  PS1="%{${terminfo[sgr0]}%}%B%D{%T}%b %B%{${fg[green]}%}%n@%{${terminfo[rev]}%}%m%{${terminfo[sgr0]}${fg[blue]}%} %~ %(!.#.$) %b%{${terminfo[sgr0]}%}"
+  PS1="${PR_NO_COLOUR}%B%D{%T}%b %B${PR_GREEN}%n@%{${terminfo[rev]}%}%m%{${terminfo[sgr0]}%}${PR_BLUE} %~ %(!.#.$) %b${PR_NO_COLOUR}"
   [ -x $( which resolveip 2>/dev/null ) ] \
     && remote=$( resolveip -s ${SSH_CLIENT%% *} 2>/dev/null ) \
     || remote=${SSH_CLIENT%% *}
-  RPROMPT="%{${terminfo[smul]}${fg[yellow]}%}${remote}%{${terminfo[sgr0]}%}"
+  RPROMPT="%{${terminfo[smul]}%}${PR_YELLOW}${remote}${PR_NO_COLOUR}"
 fi
 
 

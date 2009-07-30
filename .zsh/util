@@ -4,15 +4,33 @@ ZSH_UTIL_INDENT=""
 # See if we can use colors.
 
 autoload colors zsh/terminfo
-if [[ "$terminfo[colors]" -ge 8 ]]; then
-  colors
+if [[ -n "$terminfo[colors]" ]]; then
+  if [[ "$terminfo[colors]" -ge 8 ]]; then
+    colors
+  fi
+  for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
+    eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
+    eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
+  done
+  PR_NO_COLOUR="%{$terminfo[sgr0]%}"
+else
+  # no terminfo... let's assume!
+  PR_RED="%{[1;31m%}"
+  PR_LIGHT_RED="%{[31m%}"
+  PR_GREEN="%{[1;32m%}"
+  PR_LIGHT_GREEN="%{[32m%}"
+  PR_YELLOW="%{[1;33m%}"
+  PR_LIGHT_YELLOW="%{[33m%}"
+  PR_BLUE="%{[1;34m%}"
+  PR_LIGHT_BLUE="%{[34m%}"
+  PR_MAGENTA="%{[1;35m%}"
+  PR_LIGHT_MAGENTA="%{[35m%}"
+  PR_CYAN="%{[1;36m%}"
+  PR_LIGHT_CYAN="%{[36m%}"
+  PR_WHITE="%{[1;37m%}"
+  PR_LIGHT_WHITE="%{[37m%}"
+  PR_NO_COLOUR="%{[0m%}"
 fi
-for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-  eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-  eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
-  (( count = $count + 1 ))
-done
-PR_NO_COLOUR="%{$terminfo[sgr0]%}"
 
 function collect_args {
   local f=""
