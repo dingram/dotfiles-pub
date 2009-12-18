@@ -10,6 +10,16 @@ typeset -Ua ZSHRC_FUNCTIONS
 ZSHRC_CLASSES=( common )
 ZSHRC_FUNCTIONS=( misc zsh )
 
+whence -w git >/dev/null && HAS_GIT=1
+if [[ -n "${HAS_GIT}" ]]; then
+  ZSHRC_FUNCTIONS+=( git )
+fi
+
+whence -w svn >/dev/null && HAS_SVN=1
+if [[ -n "${HAS_SVN}" ]]; then
+  ZSHRC_FUNCTIONS+=( svn )
+fi
+
 print_trace "Classes: ${ZSHRC_CLASSES[*]}"
 print_trace "Functions: ${ZSHRC_FUNCTIONS[*]}"
 

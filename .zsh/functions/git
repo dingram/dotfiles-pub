@@ -1,0 +1,382 @@
+typeset -gA zgit_info
+zgit_info=()
+
+zgit_chpwd_hook() {
+  zgit_info_update
+}
+
+zgit_preexec_hook() {
+  if [[ $2 == git\ * ]] || [[ $2 == *\ git\ * ]]; then
+    zgit_precmd_do_update=1
+  fi
+}
+
+zgit_precmd_hook() {
+  if [ $zgit_precmd_do_update ]; then
+    unset zgit_precmd_do_update
+    zgit_info_update
+  fi
+}
+
+zgit_info_update() {
+  zgit_info=()
+
+  local gitdir="$(git rev-parse --git-dir 2>/dev/null)"
+  if [ $? -ne 0 ] || [ -z "$gitdir" ]; then
+    return
+  fi
+
+  zgit_info[dir]=$gitdir
+  zgit_info[bare]=$(git rev-parse --is-bare-repository)
+  zgit_info[inwork]=$(git rev-parse --is-inside-work-tree)
+}
+
+zgit_isgit() {
+  if [ -z "$zgit_info[dir]" ]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+zgit_inworktree() {
+  zgit_isgit || return
+  if [ "$zgit_info[inwork]" = "true" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+zgit_isbare() {
+  zgit_isgit || return
+  if [ "$zgit_info[bare]" = "true" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+zgit_head() {
+  zgit_isgit || return 1
+
+  if [ -z "$zgit_info[head]" ]; then
+    local name=''
+    name=$(git symbolic-ref -q HEAD)
+    if [ $? -eq 0 ]; then
+      if [[ $name == refs/(heads|tags)/* ]]; then
+        name=${name#refs/(heads|tags)/}
+      fi
+    else
+      name=$(git name-rev --name-only --no-undefined --always HEAD)
+      if [ $? -ne 0 ]; then
+        return 1
+      elif [[ $name == remotes/* ]]; then
+        name=${name#remotes/}
+      fi
+    fi
+    zgit_info[head]=$name
+  fi
+
+  echo $zgit_info[head]
+}
+
+zgit_branch() {
+  zgit_isgit || return 1
+  zgit_isbare && return 1
+
+  if [ -z "$zgit_info[branch]" ]; then
+    local branch=$(git symbolic-ref HEAD 2>/dev/null)
+    if [ $? -eq 0 ]; then
+      branch=${branch##*/}
+    else
+      branch=$(git name-rev --name-only --always HEAD)
+    fi
+    zgit_info[branch]=$branch
+  fi
+
+  echo $zgit_info[branch]
+  return 0
+}
+
+zgit_tracking_remote() {
+  zgit_isgit || return 1
+  zgit_isbare && return 1
+
+  local branch
+  if [ -n "$1" ]; then
+    branch=$1
+  elif [ -z "$zgit_info[branch]" ]; then
+    branch=$(zgit_branch)
+    [ $? -ne 0 ] && return 1
+  else
+    branch=$zgit_info[branch]
+  fi
+
+  local k="tracking_$branch"
+  local remote
+  if [ -z "$zgit_info[$k]" ]; then
+    remote=$(git config branch.$branch.remote)
+    zgit_info[$k]=$remote
+  fi
+
+  echo $zgit_info[$k]
+  return 0
+}
+
+zgit_tracking_merge() {
+  zgit_isgit || return 1
+  zgit_isbare && return 1
+
+  local branch
+  if [ -z "$zgit_info[branch]" ]; then
+    branch=$(zgit_branch)
+    [ $? -ne 0 ] && return 1
+  else
+    branch=$zgit_info[branch]
+  fi
+
+  local remote=$(zgit_tracking_remote $branch)
+  [ $? -ne 0 ] && return 1
+  if [ -n "$remote" ]; then # tracking branch
+    local merge=$(git config branch.$branch.merge)
+    if [ $remote != "." ]; then
+      merge=$remote/$(basename $merge)
+    fi
+    echo $merge
+    return 0
+  else
+    return 1
+  fi
+}
+
+zgit_isindexclean() {
+  zgit_isgit || return 1
+  if git diff --quiet --cached 2>/dev/null; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+zgit_isworktreeclean() {
+  zgit_isgit || return 1
+  if git diff --quiet 2>/dev/null; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+zgit_hasuntracked() {
+  zgit_isgit || return 1
+  local -a flist
+  flist=($(git ls-files --others --exclude-standard))
+  if [ $#flist -gt 0 ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+zgit_hasunmerged() {
+  zgit_isgit || return 1
+  local -a flist
+  flist=($(git ls-files -u))
+  if [ $#flist -gt 0 ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+zgit_svnhead() {
+  zgit_isgit || return 1
+
+  local commit=$1
+  if [ -z "$commit" ]; then
+    commit='HEAD'
+  fi
+
+  git show --raw $commit | \
+  grep git-svn-id | \
+  sed -re 's/^\s*git-svn-id: .*@([0-9]+).*$/\1/'
+}
+
+zgit_rebaseinfo() {
+  zgit_isgit || return 1
+  if [ -d $zgit_info[dir]/rebase-merge ]; then
+    dotest=$zgit_info[dir]/rebase-merge
+  elif [ -d $zgit_info[dir]/.dotest-merge ]; then
+    dotest=$zgit_info[dir]/.dotest-merge
+  elif [ -d .dotest ]; then
+    dotest=.dotest
+  else
+    return 1
+  fi
+
+  zgit_info[dotest]=$dotest
+
+  zgit_info[rb_onto]=$(cat "$dotest/onto")
+  zgit_info[rb_upstream]=$(cat "$dotest/upstream" 2>/dev/null)
+  if [ -f "$dotest/orig-head" ]; then
+    zgit_info[rb_head]=$(cat "$dotest/orig-head")
+  elif [ -f "$dotest/head" ]; then
+    zgit_info[rb_head]=$(cat "$dotest/head")
+  fi
+  zgit_info[rb_head_name]=$(cat "$dotest/head-name")
+
+  return 0
+}
+
+zgit_precmd_prompt_hook() {
+  zgit_isgit || return
+  head=$(zgit_head)
+  gitcommit=$(revstring $head)
+
+  local -A pc
+  pc=(
+    scm_branch "%{[0;33m%}"
+    scm_commitid "%{[0;36m%}"
+    scm_status_staged "%{[0;32m%}"
+    scm_status_workdirty "%{[1;31m%}"
+    scm_status_unmerged "%{${terminfo[smul]}[1;31m%}"
+    scm_status_untracked "%{[1;33m%}"
+    punc "%{[0;37m%}"
+    reset "%{[m%}"
+  )
+  local -a commits
+  commits=()
+
+  if zgit_rebaseinfo; then
+    local orig_commit=$(revstring $zgit_info[rb_head])
+    local orig_name=$(git name-rev --name-only $zgit_info[rb_head])
+    local orig="$pc[scm_branch]$orig_name$pc[punc]($pc[scm_commitid]$orig_commit$pc[punc])"
+    local onto_commit=$(revstring $zgit_info[rb_onto])
+    local onto_name=$(git name-rev --name-only $zgit_info[rb_onto])
+    local onto="$pc[scm_branch]$onto_name$pc[punc]($pc[scm_commitid]$onto_commit$pc[punc])"
+
+    if [ -n "$zgit_info[rb_upstream]" ] && [ $zgit_info[rb_upstream] != $zgit_info[rb_onto] ]; then
+      local upstream_commit=$(revstring $zgit_info[rb_upstream])
+      local upstream_name=$(git name-rev --name-only $zgit_info[rb_upstream])
+      local upstream="$pc[scm_branch]$upstream_name$pc[punc]($pc[scm_commitid]$upstream_commit$pc[punc])"
+      commits+="rebasing $upstream$pc[reset]..$orig$pc[reset] onto $onto$pc[reset]"
+    else
+      commits+="rebasing $onto$pc[reset]..$orig$pc[reset]"
+    fi
+
+    local -a revs
+    revs=($(git rev-list $zgit_info[rb_onto]..HEAD))
+    if [ $#revs -gt 0 ]; then
+      commits+="\n$#revs commits in"
+    fi
+
+    if [ -f $zgit_info[dotest]/message ]; then
+      mess=$(head -n1 $zgit_info[dotest]/message)
+      commits+="on $mess"
+    fi
+  elif [ -n "$gitcommit" ]; then
+    commits+="on $pc[scm_branch]$head$pc[punc]($pc[scm_commitid]$gitcommit$pc[punc])$pc[reset]"
+    local track_merge=$(zgit_tracking_merge)
+    if [ -n "$track_merge" ]; then
+      if git rev-parse --verify -q $track_merge >/dev/null; then
+        local track_remote=$(zgit_tracking_remote)
+        local tracked=$(revstring $track_merge 2>/dev/null)
+
+        local -a revs
+        revs=($(git rev-list --reverse $track_merge..HEAD))
+        if [ $#revs -gt 0 ]; then
+          local base=$(revstring $revs[1]~1)
+          local base_name=$(git name-rev --name-only $base)
+          local base_short=$(revstring $base)
+          local word_commits
+          if [ $#revs -gt 1 ]; then
+            word_commits='commits'
+          else
+            word_commits='commit'
+          fi
+
+          local conj="since"
+          if [[ "$base" == "$tracked" ]]; then
+            conj+=" tracked"
+            tracked=
+          fi
+          commits+="$#revs $word_commits $conj $pc[scm_branch]$base_name$pc[punc]($pc[scm_commitid]$base_short$pc[punc])$pc[reset]"
+        fi
+
+        if [ -n "$tracked" ]; then
+          local track_name=$track_merge
+          if [[ $track_remote == "." ]]; then
+            track_name=${track_name##*/}
+          fi
+          tracked=$(revstring $tracked)
+          commits+="tracking $pc[scm_branch]$track_name$pc[punc]"
+          if [[ "$tracked" != "$gitcommit" ]]; then
+            commits[$#commits]+="($pc[scm_commitid]$tracked$pc[punc])"
+          fi
+          commits[$#commits]+="$pc[reset]"
+        fi
+      fi
+    fi
+  fi
+
+  local gitsvn=$(git rev-parse --verify -q --short git-svn)
+  if [ $? -eq 0 ]; then
+    local gitsvnrev=$(zgit_svnhead $gitsvn)
+    local gitsvn=$(revstring $gitsvn)
+    if [ -n "$gitsvnrev" ]; then
+      local svninfo=''
+      local -a revs
+      svninfo+="$pc[default]svn$pc[punc]:$pc[scm_branch]r$gitsvnrev"
+      revs=($(git rev-list git-svn..HEAD))
+      if [ $#revs -gt 0 ]; then
+        svninfo+="$pc[punc]@$pc[default]HEAD~$#revs"
+        svninfo+="$pc[punc]($pc[scm_commitid]$gitsvn$pc[punc])"
+      fi
+      commits+=$svninfo
+    fi
+  fi
+
+  if zgit_inworktree; then
+    local -a dirty
+    if ! zgit_isindexclean; then
+      dirty+="$pc[scm_status_staged]+"
+    fi
+    if ! zgit_isworktreeclean; then
+      dirty+="$pc[scm_status_workdirty]!"
+    fi
+    if zgit_hasunmerged; then
+      dirty+="$pc[scm_status_unmerged]*"
+    fi
+    if zgit_hasuntracked; then
+      dirty+="$pc[scm_status_untracked]?"
+    fi
+    if [ $#dirty -gt 0 ]; then
+      commits+="${(j::)dirty}"
+    fi
+  fi
+
+  if [ $#commits -gt 0 ]; then
+    RPROMPT="$(echo " ${(j: :)commits}")$pc[reset]"
+  fi
+}
+
+zgitinit() {
+  typeset -gaU chpwd_functions
+  typeset -gaU preexec_functions
+  typeset -gaU precmd_functions
+  chpwd_functions+='zgit_chpwd_hook'
+  preexec_functions+='zgit_preexec_hook'
+  precmd_functions+='zgit_precmd_hook'
+  precmd_functions+='zgit_precmd_prompt_hook'
+}
+
+revstring() {
+  git describe --always $1 2>/dev/null ||
+  git rev-parse --short $1 2>/dev/null
+}
+
+zgitinit
+zgit_info_update
+
+# vim:set ft=zsh:
