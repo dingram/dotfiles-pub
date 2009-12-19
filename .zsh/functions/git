@@ -230,7 +230,7 @@ zgit_rebaseinfo() {
 }
 
 zgit_precmd_prompt_hook() {
-  zgit_isgit || return
+  zgit_isgit || { RPROMPT=''; return }
   head=$(zgit_head)
   gitcommit=$(revstring $head)
 
