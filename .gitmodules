@@ -1,0 +1,3 @@
+[submodule ".vim/plugin-vcs/vim-scmdiff"]
+	path = .vim/plugin-vcs/vim-scmdiff
+	url = git://github.com/ghewgill/vim-scmdiff
