@@ -1,0 +1,17 @@
+.*.sw?
+.*.zwc
+*.zwc
+
+# /.fluxbox/
+/.fluxbox/overlay
+/.fluxbox/windowmenu
+/.fluxbox/fbrun_history
+/.fluxbox/backgrounds
+/.fluxbox/init
+/.fluxbox/apps
+
+# /.vim/
+/.vim/.session
+
+# /.zsh/
+/.zsh/.comp_cache
