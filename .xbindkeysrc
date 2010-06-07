@@ -38,27 +38,15 @@
 
 # Examples of commands:
 
-"firefox-bin"
-	Mod4 + f
+#"import ~/screenshots/`date +%Y-%m-%d_%H.%M.%S`.png"
+#	Control+Alt + Print
+#
+#"import -window root ~/screenshots/`date +%Y-%m-%d_%H.%M.%S`.png"
+#	Control + Print
 
-"thunderbird-bin"
-	Mod4 + T
+"~/bin/voldisp 5%+"
+	Mod2 + XF86AudioRaiseVolume
 
-"opera"
-	Mod4 + O
+"~/bin/voldisp 5%-"
+	Mod2 + XF86AudioLowerVolume
 
-#"audacious"
-"amarok"
-	Control+Alt+Shift+x
-
-"import ~/screenshots/`date +%Y-%m-%d_%H.%M.%S`.png"
-	Control+Alt + Print
-
-"import -window root ~/screenshots/`date +%Y-%m-%d_%H.%M.%S`.png"
-	Control + Print
-
-"dcop amarok player enableRandomMode 1"
-	Control + Mod4 + s
-
-"dcop amarok player enableRandomMode 0"
-	Control + Mod4 + Shift + s
