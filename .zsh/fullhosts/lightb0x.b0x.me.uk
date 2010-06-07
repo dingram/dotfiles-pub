@@ -1,0 +1,24 @@
+ZSHRC_CLASSES+=( common gui gentoo )
+ZSHRC_FUNCTIONS+=( gui svn ftp irc )
+
+path+=( /opt/bin )
+path=( /usr/lib/colorgcc/bin $path )
+
+my_accounts=(
+  {root,dmi,retiarius}@{scaramanga.,}siterage.net
+  dmi@{heeps,dougal}.union.ic.ac.uk
+  dmi@{dev.,}groupspaces.com
+  dmi@{gslocal,ancilla}
+  dave@{bb.dmi.me.uk,blackb0x.zapto.org,black.b0x.me.uk}
+  {dave,root}@localhost
+)
+
+zstyle ':completion:*my-accounts' users-hosts $my_accounts
+
+export DISTCC_DIR="/var/tmp/portage/.distcc"
+
+# FTP
+autoload zfinit
+zfinit
+
+# vim: ft=zsh et ts=2 sw=2
