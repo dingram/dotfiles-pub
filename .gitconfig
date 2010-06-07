@@ -1,0 +1,18 @@
+[user]
+	name = Dave Ingram
+	email = dave@dmi.me.uk
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	ui = auto
+[alias]
+	st = status
+	di = diff
+	co = checkout
+	ci = commit
+	br = branch
+	sta = stash
+	graph = log --decorate --oneline --graph --all
+[push]
+	default = tracking
