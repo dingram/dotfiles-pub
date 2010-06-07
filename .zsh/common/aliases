@@ -65,4 +65,18 @@ alias -g '........'='../../../../../../..'
 alias -g '.........'='../../../../../../../..'
 alias -g '..........'='../../../../../../../../..'
 
+# compression
+alias 7zu='7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on'
+
+function 7z_dir() {
+  [[ "$#" -gt 1 ]] && echo "Only one argument allowed!" && return 1
+  tar cf - "$1" | 7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on -si "${1}.tar.7z"
+}
+
+function 7z_archive_dir() {
+  7z_dir "$1" && rm -Rf "$1"
+  shift
+  [[ "$#" -gt 0 ]] && 7z_archive_dir "$@"
+}
+
 # vim: ft=zsh et ts=2 sw=2
