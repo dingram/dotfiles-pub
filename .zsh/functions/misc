@@ -61,7 +61,7 @@ scpf() {
   fi
 
   print
-  print -l "${(@q)${@:t}/#/${url}}"
+  print -l "${${(@q)${@:t}/#/${url}}// /%20}"
 }
 
 # vim: ft=zsh et ts=2 sw=2
