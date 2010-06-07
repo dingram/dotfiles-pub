@@ -13,16 +13,16 @@ DIRSTACKSIZE=20
 if [[ "$TERM" == 'vt320' ]]; then
   # MIDPSSH
   PS1=$'%(!.#.$) '
-elif [[ -z "$SSH_CLIENT" ]]; then
-  # Not via SSH
-  PS1="${PR_NO_COLOUR}%B%D{%T}%b %B${PR_GREEN}%n@%m ${PR_BLUE}%~ %(!.#.$) %b${PR_NO_COLOUR}"
-else
+elif [[ -n "$SSH_CLIENT" ]]; then
   # SSH connection
   PS1="${PR_NO_COLOUR}%B%D{%T}%b %B${PR_GREEN}%n@%{${terminfo[rev]}%}%m%{${terminfo[sgr0]}%}${PR_BLUE} %~ %(!.#.$) %b${PR_NO_COLOUR}"
-  [ -x $( which resolveip 2>/dev/null ) ] \
-    && remote=$( resolveip -s ${SSH_CLIENT%% *} 2>/dev/null ) \
-    || remote=${SSH_CLIENT%% *}
-  RPROMPT="%{${terminfo[smul]}%}${PR_YELLOW}${remote}${PR_NO_COLOUR}"
+#  [ -x $( which resolveip 2>/dev/null ) ] \
+#    && remote=$( resolveip -s ${SSH_CLIENT%% *} 2>/dev/null ) \
+#    || remote=${SSH_CLIENT%% *}
+#  RPROMPT="%{${terminfo[smul]}%}${PR_YELLOW}${remote}${PR_NO_COLOUR}"
+else
+  # Not via SSH
+  PS1="${PR_NO_COLOUR}%B%D{%T}%b %B${PR_GREEN}%n@%m ${PR_BLUE}%~ %(!.#.$) %b${PR_NO_COLOUR}"
 fi
 
 
