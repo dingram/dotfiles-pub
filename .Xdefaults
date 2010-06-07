@@ -21,3 +21,9 @@ xdaliclock.seconds: True
 xdaliclock.cycle: False
 xdaliclock.font: BUILTIN3
 xdaliclock.fullscreen: True
+
+XClock*width: 265
+XClock*updatE: 1
+XClock*analog: False
+XClock*twentyfour: True
+XClock*chime: False
