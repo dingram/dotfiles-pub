@@ -69,4 +69,8 @@ setopt nobeep
 # enable extended globbing
 setopt extendedglob
 
+# magically quote special characters in URLs
+autoload -U url-quote-magic
+zle -N self-insert url-quote-magic
+
 # vim: ft=zsh et ts=2 sw=2
