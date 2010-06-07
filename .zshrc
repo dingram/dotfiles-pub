@@ -8,7 +8,7 @@ typeset -Ua ZSHRC_CLASSES
 typeset -Ua ZSHRC_FUNCTIONS
 
 ZSHRC_CLASSES=( common )
-ZSHRC_FUNCTIONS=( misc zsh )
+ZSHRC_FUNCTIONS=( misc zsh autosudo )
 
 whence -w git >/dev/null && HAS_GIT=1
 if [[ -n "${HAS_GIT}" ]]; then

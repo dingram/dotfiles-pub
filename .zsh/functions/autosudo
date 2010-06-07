@@ -1,0 +1,68 @@
+autosudo_preexec_hook() {
+  local typed="$1" limited="$2" actual="$3"
+  local dosudo=0
+
+  args=( ${(Q)${(z)actual}} )
+  prog=${(q)args[1]}
+  shift 1 args
+
+  whence -w $prog | grep -q 'command$' || return 0
+  case $( which $prog ) in
+    /etc/init.d/*)
+      dosudo=1
+      ;;
+    /sbin/rc-update)
+      dosudo=1
+      ;;
+    /usr/bin/emerge)
+      dosudo=1
+      ;;
+    /usr/bin/cfg-update)
+      dosudo=1
+      ;;
+    /usr/bin/vim)
+      # check that we can read any files
+      for a in $args; do
+        if [[ $a == -* ]]; then
+          continue;
+        fi
+        if [[ ! -e "$a" && ! -w "${a:h}" ]]; then
+          dosudo=1
+          break
+        elif [[ -r "$a" && ! -w "$a" ]]; then
+          dosudo=1
+          break
+        fi
+      done
+      unset a
+      ;;
+  esac
+
+  if [[ "${dosudo}" == "1" ]]; then
+    print "\e[1;31mAUTO-SUDO:\e[m ${prog} ${args}"
+    # replace original command with sudo version
+    sleep 2 && \
+    eval "function ${prog} {
+      unsetopt noglob
+      sudo -- ${prog}" '$*
+      unfunction' "${prog}
+    }"
+  fi
+}
+
+noautosudo() {
+  "$@"
+}
+
+nosudo() {
+  noautosudo "$@"
+}
+
+autosudo_init() {
+  typeset -gaU preexec_functions
+  preexec_functions+='autosudo_preexec_hook'
+}
+
+autosudo_init
+
+# vim:set ft=zsh:
