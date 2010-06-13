@@ -27,8 +27,8 @@ zgit_info_update() {
   fi
 
   zgit_info[dir]=$gitdir
-  zgit_info[bare]=$(git rev-parse --is-bare-repository)
-  zgit_info[inwork]=$(git rev-parse --is-inside-work-tree)
+  zgit_info[bare]=$(git rev-parse --is-bare-repository 2>/dev/null)
+  zgit_info[inwork]=$(git rev-parse --is-inside-work-tree 2>/dev/null)
 }
 
 zgit_isgit() {
@@ -62,13 +62,13 @@ zgit_head() {
 
   if [ -z "$zgit_info[head]" ]; then
     local name=''
-    name=$(git symbolic-ref -q HEAD)
+    name=$(git symbolic-ref -q HEAD 2>/dev/null)
     if [ $? -eq 0 ]; then
       if [[ $name == refs/(heads|tags)/* ]]; then
         name=${name#refs/(heads|tags)/}
       fi
     else
-      name=$(git name-rev --name-only --no-undefined --always HEAD)
+      name=$(git name-rev --name-only --no-undefined --always HEAD 2>/dev/null)
       if [ $? -ne 0 ]; then
         return 1
       elif [[ $name == remotes/* ]]; then
@@ -90,7 +90,7 @@ zgit_branch() {
     if [ $? -eq 0 ]; then
       branch=${branch##*/}
     else
-      branch=$(git name-rev --name-only --always HEAD)
+      branch=$(git name-rev --name-only --always HEAD 2>/dev/null)
     fi
     zgit_info[branch]=$branch
   fi
@@ -198,7 +198,7 @@ zgit_svnhead() {
     commit='HEAD'
   fi
 
-  git show --raw $commit | \
+  git show --raw $commit 2>/dev/null | \
   grep git-svn-id | \
   sed -re 's/^\s*git-svn-id: .*@([0-9]+).*$/\1/'
 }
@@ -266,7 +266,7 @@ zgit_precmd_prompt_hook() {
     fi
 
     local -a revs
-    revs=($(git rev-list $zgit_info[rb_onto]..HEAD))
+    revs=($(git rev-list $zgit_info[rb_onto]..HEAD 2>/dev/null))
     if [ $#revs -gt 0 ]; then
       commits+="\n$#revs commits in"
     fi
@@ -284,7 +284,7 @@ zgit_precmd_prompt_hook() {
         local tracked=$(revstring $track_merge 2>/dev/null)
 
         local -a revs
-        revs=($(git rev-list --reverse $track_merge..HEAD))
+        revs=($(git rev-list --reverse $track_merge..HEAD 2>/dev/null))
         if [ $#revs -gt 0 ]; then
           local base=$(revstring $revs[1]~1)
           local base_name=$(git name-rev --name-only $base)
@@ -328,7 +328,7 @@ zgit_precmd_prompt_hook() {
       local svninfo=''
       local -a revs
       svninfo+="$pc[default]svn$pc[punc]:$pc[scm_branch]r$gitsvnrev"
-      revs=($(git rev-list $gitsvn..HEAD))
+      revs=($(git rev-list $gitsvn..HEAD 2>/dev/null))
       if [ $#revs -gt 0 ]; then
         svninfo+="$pc[punc]@$pc[default]HEAD~$#revs"
         svninfo+="$pc[punc]($pc[scm_commitid]$gitsvn$pc[punc])"
